@@ -32,6 +32,7 @@ class RawSocket:
         s.connect(('8.8.8.8', 80))
         address = s.getsockname()
         s.close()
+        print(address)
         return address
 
     def get_destination_address(self, url):
@@ -146,6 +147,12 @@ class RawSocket:
         data = self.recv_socket.recv(1024)
 
         print(data)
+        ipheader = data[0:20]
+        ip_unpack = struct.unpack("!BBHHHBBH4s4s", ipheader)
+        print(ip_unpack)
+        print(socket.inet_ntoa(ip_unpack[8]))
+        print(socket.inet_ntoa(ip_unpack[9]))
+        print("finish")
 
 
 
