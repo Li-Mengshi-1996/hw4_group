@@ -5,8 +5,9 @@ def sniffer_dog():
     rawSocket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_RAW)
     rawSocket.bind(('127.0.0.1',0))
 
+    print("hello")
     receivedPacket = rawSocket.recv(2048)
-
+    print("bye")
     ipHeader = receivedPacket[0:20]
     ipHdr = struct.unpack("!12s4s4s",ipHeader)
     sourceIP = socket.inet_ntoa(ipHdr[0])
