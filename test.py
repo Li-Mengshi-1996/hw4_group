@@ -17,3 +17,5 @@ import socket
 
 a = (2 << 4)
 print(a)
+
+# iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP
