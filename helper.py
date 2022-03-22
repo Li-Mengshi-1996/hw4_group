@@ -41,8 +41,6 @@ def parse_url(url):
 
 def check_sum(msg):
     s = 0
-    if len(msg) % 2 != 0:
-        msg += b'\0'
     for i in range(0, len(msg), 2):
         w = msg[i] + (msg[i + 1] << 8)
         s = s + w
