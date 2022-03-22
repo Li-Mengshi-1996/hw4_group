@@ -50,6 +50,9 @@ class RawSocket:
 
         tcp_data.print()
 
+        print("connected")
+
+
 
 
 
@@ -107,7 +110,7 @@ def main():
     t = RawSocket()
     t.connect(host)
 
-    t._send('', get_tcp_flags(syn=1))
+    # t._send('', get_tcp_flags(syn=1))
     #
     # t.connect(host)
     #
