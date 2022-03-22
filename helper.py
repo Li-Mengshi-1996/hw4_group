@@ -119,4 +119,24 @@ def get_tcp_header(user_data, tcp_flags, source_port, destination_port, tcp_seq_
     return tcp_header
 
 
-print(get_tcp_flags(rst=1))
+def split_data_to_send(data, segment_size, tcp_seq):
+    start = 0
+    temp = []
+    result = []
+    current_seq = tcp_seq
+
+    while start < len(data):
+        end = min(start + segment_size, len(data))
+        temp.append(data[start:end])
+        start = end
+
+    for data_piece in temp:
+        result.append((current_seq, data_piece))
+        current_seq += len(data_piece)
+
+    return result
+
+# print(split_data_to_send("1234567891234567891234567891234",9,0))
+
+
+

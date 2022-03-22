@@ -54,14 +54,23 @@ class RawSocket:
         self.tcp_seq = tcp_data.tcp_ack_seq
         self.tcp_ack = tcp_data.tcp_seq + 1
 
-        self._send('',get_tcp_flags(ack=1))
-
-
+        self._send('', get_tcp_flags(ack=1))
 
         print("connected")
+    def send(self, data):
+        flag = get_tcp_flags(psh=1, ack=1)
+        data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
+        while len(data_pieces) != 0:
+            seq_no, data = data_pieces.pop(0)
+            payload = data.encode()
+            tcp_data = TCPHeader(self.source_port, self.destination_port,seq_no, self.tcp_ack,flag, payload=payload)
 
-
+            ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
+                                   tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
+            self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+            print("sending data:")
+            print(data)
 
 
     def _send(self, data, flag):
@@ -71,7 +80,6 @@ class RawSocket:
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
-
         if flag == get_tcp_flags(ack=1):
             print("\n\n\n")
             print("This is local send ACK")
@@ -79,7 +87,13 @@ class RawSocket:
             print("-------------------")
             ip_tcp_data.print()
             print("-------------------")
-
+        elif flag == get_tcp_flags(syn=1):
+            print("\n\n\n")
+            print("This is local send SYN")
+            tcp_data.print()
+            print("-------------------")
+            ip_tcp_data.print()
+            print("-------------------")
 
     def _recv_ip_tcp_data(self, delay=60):
         self.recv_socket.settimeout(delay)
@@ -87,7 +101,6 @@ class RawSocket:
             while True:
 
                 data = self.recv_socket.recv(self.buff_size)
-                print(data)
                 ip_header_data = data[0:20]
                 ip_tcp_data = extract_ip_header(data)
                 print("success")
@@ -123,12 +136,9 @@ def main():
     t = RawSocket()
     t.connect(host)
 
-    # t._send('', get_tcp_flags(syn=1))
     #
-    # t.connect(host)
-    #
-    # request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
-    # t.send(request)
+    request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
+    t.send(request)
     # t.receive()
     #
     # print("local ip: " + t.source_ip)
