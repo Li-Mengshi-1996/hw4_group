@@ -153,6 +153,12 @@ class RawSocket:
         print(socket.inet_ntoa(ip_unpack[8]))
         print(socket.inet_ntoa(ip_unpack[9]))
         print("finish")
+        tcp = data[20:40]
+        tcp_unpack = struct.unpack('!HHLLBBHHH', tcp)
+        print(tcp_unpack)
+
+        print(data[40:])
+        print(len(data))
 
 
 
