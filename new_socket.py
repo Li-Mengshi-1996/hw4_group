@@ -71,6 +71,7 @@ class RawSocket:
             while True:
 
                 data = self.recv_socket.recv(self.buff_size)
+                print(data)
                 ip_header_data = data[0:20]
                 ip_tcp_data = extract_ip_header(data)
 
