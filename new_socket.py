@@ -81,6 +81,7 @@ class RawSocket:
                 if check_sum(ip_header_data) != 0:
                     print("IP checksum error")
                     continue
+                print("ip data: ")
                 ip_tcp_data.print()
                 print("----------")
                 return ip_tcp_data.payload
