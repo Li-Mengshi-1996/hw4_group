@@ -123,6 +123,8 @@ class RawSocket:
         if tcp_data is None:
             return None
         psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
+        print("check sum check")
+        print(check_sum(psh))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
