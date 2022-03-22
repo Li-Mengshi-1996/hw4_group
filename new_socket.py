@@ -131,8 +131,8 @@ class RawSocket:
         return extract_tcp_header(tcp_data)
 
     def receive(self):
-        print("Start receiving")
         tcp_data = self._recv()
+        print("Start receiving tcp tcp")
         tcp_data.print()
         print(tcp_data.payload)
 
