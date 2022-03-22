@@ -133,18 +133,18 @@ class RawSocket:
 
 def main():
     host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    # t = RawSocket()
-    #
-    # t.connect(host)
+    t = RawSocket()
+
+    t.connect(host)
 
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
-    # t.send(request)
-    # t.receive()
+    t.send(request)
+    t.receive()
 
-    s = socket.socket()
-    s.connect((host, 80))
-    s.send(request.encode())
-    print(s.recv(1024))
+    # s = socket.socket()
+    # s.connect((host, 80))
+    # s.send(request.encode())
+    # print(s.recv(1024))
 
 
 main()
