@@ -123,7 +123,7 @@ class RawSocket:
 
 def main():
     t = RawSocket()
-    host, file, ip, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     t.connect(host)
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     t.send(request)

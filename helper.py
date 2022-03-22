@@ -35,9 +35,8 @@ def parse_url(url):
     if path == "":
         path = "/"
 
-    ip = socket.gethostbyname(host)
 
-    return host, file, ip, path
+    return host, file, path
 
 
 def check_sum(msg):
