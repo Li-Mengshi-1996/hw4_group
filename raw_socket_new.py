@@ -53,6 +53,10 @@ class RawSocket:
 
         print("connected")
 
+    def _recv_ack(self):
+        return
+
+
     def _send_packet(self, data, tcp_flag):
         packet = get_ip_header(self.source_ip, self.destination_ip) \
                  + get_tcp_header(data, tcp_flag, self.source_port, self.destination_port, self.tcp_seq_no,
@@ -120,6 +124,10 @@ class RawSocket:
             print("Receive time out.")
             return None, None
 
+    def receive(self):
+        tcp, payload = self._receive()
+        print(payload)
+
 
 def main():
     t = RawSocket()
@@ -127,6 +135,7 @@ def main():
     t.connect(host)
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     t.send(request)
+    t.receive()
 
 
 main()
