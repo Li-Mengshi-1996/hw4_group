@@ -50,8 +50,8 @@ class RawSocket:
             print("Fail to connect")
             sys.exit()
 
-        self.tcp_seq_no = tcp.seq
-        self.tcp_ack_no = tcp.ack_seq
+        self.tcp_seq_no = tcp.ack_seq
+        self.tcp_ack_no = tcp.seq+1
         self._send("", get_tcp_flags(ack=1))
 
         print("connected")
@@ -131,10 +131,10 @@ class RawSocket:
 
     def receive(self):
 
-        for i in range(0,10):
-            tcp, payload = self._receive()
-            print(tcp.flag)
-            print(payload)
+        tcp, payload = self._receive()
+        print(tcp.flag)
+        print(payload)
+
 
 
 
