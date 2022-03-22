@@ -38,6 +38,20 @@ class RawSocket:
 
     def connect(self, host):
         self.destination_host, self.destination_ip = get_destination_address(host)
+        self._send("", get_tcp_flags(syn=1))
+
+        print("\n\n\n\n\n")
+        print("After send:")
+
+        tcp_data = self._recv()
+        if tcp_data is None or tcp_data.tcp_flags != get_tcp_flags(syn=1, ack=1):
+            print("Fail to connect")
+            sys.exit()
+
+        tcp_data.print()
+
+
+
 
     def _send(self, data, flag):
         payload = data.encode()
@@ -49,12 +63,46 @@ class RawSocket:
         tcp_data.print()
         print("-------------------")
         ip_tcp_data.print()
+        print("-------------------")
+
+    def _recv_ip_tcp_data(self, delay=60):
+        self.recv_socket.settimeout(delay)
+        try:
+            while True:
+
+                data = self.recv_socket.recv(self.buff_size)
+                ip_header_data = data[0:20]
+                ip_tcp_data = extract_ip_header(data)
+
+                if ip_tcp_data.source_ip != self.destination_ip or ip_tcp_data.destination_ip != self.source_ip:
+                    continue
+                if check_sum(ip_header_data) != 0:
+                    print("IP checksum error")
+                    continue
+                ip_tcp_data.print()
+                print("----------")
+                return ip_tcp_data.payload
+        except:
+            print("ERROR")
+            return None
+
+    def _recv(self, delay=60):
+        tcp_data = self._recv_ip_tcp_data(delay=delay)
+        if tcp_data is None:
+            return None
+        psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
+
+        if check_sum(psh) != 0:
+            print("TCP checksum error")
+            return None
+
+        return extract_tcp_header(tcp_data)
 
 
 def main():
-
     host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     t = RawSocket()
+    t.connect(host)
 
     t._send('', get_tcp_flags(syn=1))
     #
