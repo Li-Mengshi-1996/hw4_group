@@ -159,6 +159,7 @@ class RawSocket:
 
         print(data[40:])
         print(len(data))
+        print("hello")
 
 
 
