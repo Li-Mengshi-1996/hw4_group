@@ -130,6 +130,11 @@ class RawSocket:
 
         return extract_tcp_header(tcp_data)
 
+    def receive(self):
+        tcp_data = self._recv()
+        tcp_data.print()
+        print(tcp_data.payload)
+
 
 def main():
     host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
@@ -139,7 +144,7 @@ def main():
     #
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     t.send(request)
-    # t.receive()
+    t.receive()
     #
     # print("local ip: " + t.source_ip)
     # print("local port: " + str(t.source_port))
