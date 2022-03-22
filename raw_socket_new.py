@@ -130,9 +130,12 @@ class RawSocket:
             return None, None
 
     def receive(self):
-        tcp, payload = self._receive()
-        print(tcp.flag)
-        print(payload)
+
+        for i in range(0,10):
+            tcp, payload = self._receive()
+            print(tcp.flag)
+            print(payload)
+
 
 
 

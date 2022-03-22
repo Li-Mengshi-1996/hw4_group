@@ -110,3 +110,4 @@ def get_tcp_header(user_data, tcp_flags, source_port, destination_port, tcp_seq_
 
     return tcp_header
 
+print(get_tcp_flags(rst=1))
