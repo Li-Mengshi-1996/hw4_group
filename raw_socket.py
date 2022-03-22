@@ -2,6 +2,8 @@ import socket
 import random
 import struct
 import sys
+from IP_TCP import *
+import time
 
 SYN = 0 + (1 << 1) + (0 << 2) + (0 << 3) + (0 << 4) + (0 << 5)
 FIN = 1 + (0 << 1) + (0 << 2) + (0 << 3) + (0 << 4) + (0 << 5)
@@ -22,6 +24,10 @@ class RawSocket:
             self.destination_path = ""
 
             self.outtput_file = ""
+            self.recv_size = 65536
+
+            self.tcp_seq_no = random.randint(0, int(pow(2,31) - 1))
+            self.tcp_ack_no = 0
 
         except:
             print("ERROR when creating sockets.")
@@ -54,9 +60,68 @@ class RawSocket:
 
         return host, file, ip, path
 
+    def _send(self, data, tcp_flag):
+        # First send SYN
+        if len(data) == 0:
+            packet = self.get_ip_header() + self.get_tcp_header(data, tcp_flag) + data
+            self.send_socket.sendto(packet, (self.destination_ip, self.destination_port))
+            return
+
+    def _receive(self):
+        # One minute delay time
+        delay = 60
+
+        self.recv_socket.settimeout(delay)
+
+        try:
+            while True:
+                data = self.recv_socket.recv(self.recv_size)
+
+                ip_info = data[0:20]
+
+                ip_unpack = struct.unpack("!BBHHHBBH4s4s", ip_info)
+
+                ip = IP_Info(ip_unpack)
+
+                if ip.destination != self.source_ip or ip.source != self.destination_ip:
+                    continue
+
+                tcp_info = data[20:40]
+                tcp_unpack = struct.unpack('!HHLLBBHHH', tcp_info)
+
+                tcp = TCP_Info(tcp_unpack)
+
+                if tcp.destination != self.source_port or tcp.source != self.destination_port:
+                    continue
+
+                payload = data[40:]
+
+                return tcp, payload
+
+        except:
+            print("Receive time out.")
+            return None, None
+
+    def recv_ack(self):
+        start = time.time()
+
+        while time.time() - start <= 60:
+            tcp, payload = self._receive()
+
+            if tcp is None:
+                break
+
+
+
+
+    def congestion_control(self):
+        return
+
     def connect(self, url):
         self.destination_host, self.outtput_file, self.destination_ip, self.destination_path = self.get_destination_address(
             url)
+        # send SYN first
+        self._send('', SYN)
 
         print("connected")
 
@@ -102,8 +167,8 @@ class RawSocket:
         tcp_source = self.source_port
         tcp_dest = self.destination_port
 
-        tcp_seq = 454
-        tcp_ack_seq = 0
+        tcp_seq = self.tcp_seq_no
+        tcp_ack_seq = self.tcp_ack_no
 
         tcp_doff = 5
         tcp_window = socket.htons(5840)
@@ -141,8 +206,6 @@ class RawSocket:
         print("sent")
         print(self.destination_ip)
 
-
-
     def receive(self):
         data = self.recv_socket.recv(1024)
 
@@ -160,7 +223,6 @@ class RawSocket:
         print(data[40:])
         print(len(data))
         print("hello")
-
 
 
 def main():
