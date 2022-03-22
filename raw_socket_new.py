@@ -102,6 +102,8 @@ class RawSocket:
         try:
             while True:
                 data = self.recv_socket.recv(self.recv_size)
+                print("data")
+                print(data)
 
                 ip_info = data[0:20]
 
