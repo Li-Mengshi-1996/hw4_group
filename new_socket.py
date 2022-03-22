@@ -94,9 +94,9 @@ class RawSocket:
             return None
         psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
 
-        if check_sum(psh) != 0:
-            print("TCP checksum error")
-            return None
+        # if check_sum(psh) != 0:
+        #     print("TCP checksum error")
+        #     return None
 
         return extract_tcp_header(tcp_data)
 
