@@ -24,11 +24,14 @@ class TCP_Info():
 def extract_ip_header(data):
     ip_ihl_ver, ip_tos, ip_tot_len, ip_id, ip_frag_off, ip_ttl, ip_proto, ip_check, ip_saddr, ip_daddr = unpack(
         '!BBHHHBBH4s4s', data[0:20])
+    print("A")
     source_ip = socket.inet_ntoa(ip_saddr)
     destination_ip = socket.inet_ntoa(ip_daddr)
+    print("B")
 
     ip_ver = ip_ihl_ver >> 4
     ip_ihl = ip_ihl_ver & (1 << 5 - 1)
+    print("C")
 
     result = (ip_id, source_ip, destination_ip, data[20:], ip_ihl, ip_ver, ip_tos, ip_tot_len, ip_frag_off,
               ip_ttl, ip_proto)
