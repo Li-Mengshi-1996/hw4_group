@@ -48,7 +48,15 @@ class RawSocket:
             print("Fail to connect")
             sys.exit()
 
+        print("After send SYN to server, I get:")
         tcp_data.print()
+
+        self.tcp_seq = tcp_data.tcp_ack_seq
+        self.tcp_ack = tcp_data.tcp_seq + 1
+
+        self._send('',get_tcp_flags(ack=1))
+
+
 
         print("connected")
 
@@ -63,10 +71,13 @@ class RawSocket:
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
-        tcp_data.print()
-        print("-------------------")
-        ip_tcp_data.print()
-        print("-------------------")
+
+        if flag == get_tcp_flags(ack=1):
+            tcp_data.print()
+            print("-------------------")
+            ip_tcp_data.print()
+            print("-------------------")
+
 
     def _recv_ip_tcp_data(self, delay=60):
         self.recv_socket.settimeout(delay)
