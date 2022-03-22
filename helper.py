@@ -35,12 +35,22 @@ def parse_url(url):
     if path == "":
         path = "/"
 
-
     return host, file, path
+
+
+def create_psh(source_ip, destination_ip, protocol, tcp_length):
+    source_address = socket.inet_aton(source_ip)
+    dest_address = socket.inet_aton(destination_ip)
+    placeholder = 0
+
+    psh = pack('!4s4sBBH', source_address, dest_address, placeholder, protocol, tcp_length)
+    return psh
 
 
 def check_sum(msg):
     s = 0
+    if len(msg) % 2 != 0:
+        msg += b'\0'
     for i in range(0, len(msg), 2):
         w = msg[i] + (msg[i + 1] << 8)
         s = s + w
@@ -107,5 +117,6 @@ def get_tcp_header(user_data, tcp_flags, source_port, destination_port, tcp_seq_
                       tcp_window) + pack('H', tcp_check) + pack('!H', tcp_urg_ptr)
 
     return tcp_header
+
 
 print(get_tcp_flags(rst=1))
