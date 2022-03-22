@@ -133,6 +133,10 @@ class RawSocket:
         tcp, payload = self._receive()
         print(tcp.destination)
         print(payload)
+        tcp, payload = self._receive()
+        print(tcp.destination)
+        print(payload)
+
 
 
 def main():
