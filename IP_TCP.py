@@ -33,7 +33,7 @@ def extract_ip_header(data):
     ip_ihl = ip_ihl_ver & (1 << 5 - 1)
     print("C")
 
-    result = (ip_id, source_ip, destination_ip, data[20:], ip_ihl, ip_ver, ip_tos, ip_tot_len, ip_frag_off,
+    result = IPHeader(ip_id, source_ip, destination_ip, data[20:], ip_ihl, ip_ver, ip_tos, ip_tot_len, ip_frag_off,
               ip_ttl, ip_proto)
 
     result.ip_check = ip_check
