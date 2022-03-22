@@ -74,6 +74,7 @@ class RawSocket:
                 print(data)
                 ip_header_data = data[0:20]
                 ip_tcp_data = extract_ip_header(data)
+                print("success")
 
                 if ip_tcp_data.source_ip != self.destination_ip or ip_tcp_data.destination_ip != self.source_ip:
                     continue
