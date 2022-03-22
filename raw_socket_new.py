@@ -44,10 +44,11 @@ class RawSocket:
         self._send('', SYN)
         tcp, payload = self._receive()
 
-        if tcp is None or tcp.flag != get_tcp_flags(syn=1, ack=1):
+        if tcp is None or tcp.flag != get_tcp_flags(syn=1, ack=1) or tcp.ack_seq - self.tcp_seq_no != 1:
             print("Fail to connect")
             sys.exit()
         print("check---------------")
+        print("flag: " + str(tcp.flag))
         print(self.tcp_seq_no)
         print(tcp.ack_seq)
 
