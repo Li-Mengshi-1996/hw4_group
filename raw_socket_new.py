@@ -31,6 +31,7 @@ class RawSocket:
             self.cwnd = 1
             self.advertised_window = 5840
             self.segment_size = 1000
+            self.test = ""
 
         except:
             print("ERROR when creating sockets.")
@@ -88,7 +89,8 @@ class RawSocket:
         self._send_packet(final_part, tcp_flag)
         check += final_part
         print("finish")
-        print(check)
+        self.test = check
+
 
     def send(self, data):
         self._send(data, get_tcp_flags(psh=1, ack=1))
@@ -141,10 +143,10 @@ def main():
     t.send(request)
     t.receive()
 
-    # s = socket.socket()
-    # s.connect((host, 80))
-    # s.send(request.encode())
-    # print(s.recv(1024))
+    s = socket.socket()
+    s.connect((host, 80))
+    s.send(t.test.encode())
+    print(s.recv(1024))
 
 
 main()
