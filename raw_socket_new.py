@@ -30,14 +30,14 @@ class RawSocket:
             self_non_acked_payload = dict()
             self.cwnd = 1
             self.advertised_window = 5840
+            self.segment_size = 1000
 
         except:
             print("ERROR when creating sockets.")
             sys.exit()
 
-    def connect(self, url):
-        self.destination_host, self.outtput_file, self.destination_ip, self.destination_path = get_destination_address(
-            url)
+    def connect(self, host):
+        self.destination_host, self.destination_ip = get_destination_address(host)
         # send SYN first
         SYN = get_tcp_flags(syn=1)
         self._send('', SYN)
@@ -53,15 +53,40 @@ class RawSocket:
 
         print("connected")
 
+    def _send_packet(self, data, tcp_flag):
+        packet = get_ip_header(self.source_ip, self.destination_ip) \
+                 + get_tcp_header(data, tcp_flag, self.source_port, self.destination_port, self.tcp_seq_no,
+                                  self.tcp_ack_no, self.advertised_window, self.source_ip, self.destination_ip) \
+                 + data.encode()
+        self.send_socket.sendto(packet, (self.destination_ip, self.destination_port))
+
+    # data is a string
     def _send(self, data, tcp_flag):
-        # First send SYN
+
+        # This sends SYN
         if len(data) == 0:
-            packet = get_ip_header(self.source_ip, self.destination_ip) \
-                     + get_tcp_header(data, tcp_flag, self.source_port, self.destination_port, self.tcp_seq_no,
-                                      self.tcp_ack_no, self.advertised_window, self.source_ip, self.destination_ip) \
-                     + data.encode()
-            self.send_socket.sendto(packet, (self.destination_ip, self.destination_port))
+            self._send_packet(data, tcp_flag)
             return
+
+        start = 0
+        print(data)
+        check = ""
+
+        while len(data) - start > self.cwnd * self.segment_size:
+            end = start + self.cwnd * self.segment_size
+            part = data[start:end]
+            self._send_packet(part, tcp_flag)
+            start = end
+            check += part
+
+        final_part = data[start:]
+        self._send_packet(final_part, tcp_flag)
+        check += final_part
+        print("finish")
+        print(check)
+
+    def send(self, data):
+        self._send(data, get_tcp_flags(psh=1, ack=1))
 
     def _receive(self):
         delay = 60
@@ -95,8 +120,13 @@ class RawSocket:
             print("Receive time out.")
             return None, None
 
+
 def main():
     t = RawSocket()
-    t.connect("http://david.choffnes.com/classes/cs4700sp22/project4.php")
+    host, file, ip, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    t.connect(host)
+    request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
+    t.send(request)
+
 
 main()

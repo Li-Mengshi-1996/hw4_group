@@ -16,7 +16,11 @@ def get_source_address():
     return address
 
 
-def get_destination_address(url):
+def get_destination_address(host):
+    return host, socket.gethostbyname(host)
+
+
+def parse_url(url):
     url = url.replace("http://", "")
     url = url.replace("https://", "")
     url_list = url.split("/")
@@ -89,7 +93,7 @@ def get_tcp_header(user_data, tcp_flags, source_port, destination_port, tcp_seq_
     tcp_offset_res = (tcp_doff << 4) + 0
 
     tcp_header = pack('!HHLLBBHHH', tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags,
-                             tcp_window, tcp_check, tcp_urg_ptr)
+                      tcp_window, tcp_check, tcp_urg_ptr)
 
     source_address = socket.inet_aton(source_ip)
     dest_address = socket.inet_aton(destination_ip)
