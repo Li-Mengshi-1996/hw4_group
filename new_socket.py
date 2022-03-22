@@ -73,6 +73,8 @@ class RawSocket:
 
 
         if flag == get_tcp_flags(ack=1):
+            print("\n\n\n")
+            print("This is local send ACK")
             tcp_data.print()
             print("-------------------")
             ip_tcp_data.print()
