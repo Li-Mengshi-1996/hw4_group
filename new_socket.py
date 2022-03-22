@@ -36,7 +36,8 @@ class RawSocket:
             print("ERROR when creating sockets.")
             sys.exit()
 
-    def connect(self, host):
+    def connect(self, host, port=80):
+        self.destination_port = port
         self.destination_host, self.destination_ip = get_destination_address(host)
         self._send("", get_tcp_flags(syn=1))
 
