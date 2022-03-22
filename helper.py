@@ -137,6 +137,7 @@ def split_data_to_send(data, segment_size, tcp_seq):
     return result
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
+print(get_tcp_flags(ack=1))
 
 
 
