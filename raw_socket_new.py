@@ -143,10 +143,16 @@ def main():
     t.send(request)
     t.receive()
 
-    s = socket.socket()
-    s.connect((host, 80))
-    s.send(t.test.encode())
-    print(s.recv(1024))
+    print("local ip: " + t.source_ip)
+    print("local port: " + str(t.source_port))
+
+    print("remote ip: " + t.destination_ip)
+    print("remote port: " + str(t.destination_port))
+
+    # s = socket.socket()
+    # s.connect((host, 80))
+    # s.send(t.test.encode())
+    # print(s.recv(1024))
 
 
 main()
