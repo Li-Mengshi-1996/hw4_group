@@ -51,6 +51,8 @@ class RawSocket:
         print("flag: " + str(tcp.flag))
         print(self.tcp_seq_no)
         print(tcp.ack_seq)
+        print("remote seq")
+        print(tcp.seq)
 
         self.tcp_seq_no = tcp.ack_seq
         self.tcp_ack_no = tcp.seq + 1
@@ -74,6 +76,9 @@ class RawSocket:
         # This sends SYN
         if len(data) == 0:
             self._send_packet(data, tcp_flag)
+            if tcp_flag == get_tcp_flags(ack=1):
+                print("local ack")
+                print(self.tcp_ack_no)
             return
 
         start = 0
