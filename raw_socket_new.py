@@ -43,6 +43,8 @@ class RawSocket:
         self._send('', SYN)
         tcp, payload = self._receive()
 
+        print(payload)
+
         if tcp is None or tcp.flag != get_tcp_flags(syn=1, ack=1):
             print("Fail to connect")
             sys.exit()
@@ -55,7 +57,6 @@ class RawSocket:
 
     def _recv_ack(self):
         return
-
 
     def _send_packet(self, data, tcp_flag):
         packet = get_ip_header(self.source_ip, self.destination_ip) \
@@ -131,12 +132,19 @@ class RawSocket:
 
 
 def main():
-    t = RawSocket()
     host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    t.connect(host)
+    # t = RawSocket()
+    #
+    # t.connect(host)
+
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
-    t.send(request)
-    t.receive()
+    # t.send(request)
+    # t.receive()
+
+    s = socket.socket()
+    s.connect((host, 80))
+    s.send(request.encode())
+    print(s.recv(1024))
 
 
 main()
