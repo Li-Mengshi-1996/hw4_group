@@ -38,7 +38,8 @@ class RawSocket:
 
     def connect(self, host, port=80):
         self.destination_port = port
-        self.destination_host, self.destination_ip = get_destination_address(host)
+        self.destination_host = host
+        self.destination_ip = socket.gethostbyname(host)
         self._send("", get_tcp_flags(syn=1))
 
         print("\n\n\n\n\n")
