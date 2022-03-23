@@ -59,6 +59,7 @@ class RawSocket:
         self._send('', get_tcp_flags(ack=1))
 
         print("connected")
+
     def send(self, data):
         flag = get_tcp_flags(psh=1, ack=1)
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
