@@ -65,7 +65,7 @@ class RawSocket:
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
         p = "abc".encode()
-        tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
+        tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=p)
         print("this is fake data")
         tcp_data.print()
 
