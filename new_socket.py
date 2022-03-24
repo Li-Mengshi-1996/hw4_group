@@ -71,6 +71,8 @@ class RawSocket:
         ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
         while len(data_pieces) != 0:
             seq_no, split_data = data_pieces.pop(0)
