@@ -91,6 +91,7 @@ class RawSocket:
         pointer = 0
 
         while pointer < len(data):
+            end = min(pointer + self.cwnd, len(data))
             piece = data[pointer: pointer + self.cwnd]
 
             payload = piece.encode()
@@ -107,7 +108,7 @@ class RawSocket:
                 print("No ack receive")
                 self.cwnd = 1
                 continue
-            pointer = pointer + self.cwnd
+            pointer = end
             self.tcp_seq = tcp_data.tcp_ack_seq
             self.cwnd = min(1000, self.cwnd * 2)
 
