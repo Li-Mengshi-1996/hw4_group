@@ -146,37 +146,40 @@ class RawSocket:
 
     def receive(self):
 
-        tcp_data = self._recv()
-        tcp_data.print()
+        for i in range(0,40):
+            tcp_data = self._recv()
+            tcp_data.print()
+
+
         # print(tcp_data.payload)
 
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
-
-        tcp_data = self._recv()
-        tcp_data.print()
-        # print(tcp_data.payload)
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
+        #
+        # tcp_data = self._recv()
+        # tcp_data.print()
+        # # print(tcp_data.payload)
 
 
 def main():
