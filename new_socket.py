@@ -151,6 +151,7 @@ class RawSocket:
         print(tcp_data.payload)
 
         print("\n\nStart receiving tcp tcp")
+        tcp_data = self._recv()
         tcp_data.print()
         print(tcp_data.payload)
 
