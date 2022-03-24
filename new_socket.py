@@ -65,15 +65,15 @@ class RawSocket:
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
         while len(data_pieces) != 0:
-            seq_no, data = data_pieces.pop(0)
-            payload = data.encode()
+            seq_no, split_data = data_pieces.pop(0)
+            payload = split_data.encode()
             tcp_data = TCPHeader(self.source_port, self.destination_port,seq_no, self.tcp_ack,flag, payload=payload)
 
             ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                    tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
             self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
             print("sending data:")
-            print(data)
+            print(split_data)
 
 
     def _send(self, data, flag):
