@@ -178,7 +178,7 @@ class RawSocket:
     def receive(self):
         print("receive")
 
-        for i in range(0, 10):
+        for i in range(0, 25):
             tcp_data = self._recv()
             tcp_data.print()
             print(tcp_data.payload)
