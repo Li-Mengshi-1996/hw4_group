@@ -157,7 +157,6 @@ class RawSocket:
                 # print("----------")
                 return ip_tcp_data.payload
         except:
-            self.cwnd = 1
             print("ERROR")
             return None
 
