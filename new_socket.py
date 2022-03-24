@@ -64,8 +64,8 @@ class RawSocket:
         flag = get_tcp_flags(psh=1, ack=1)
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
-        p = "abc".encode()
-        tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=p)
+        p = data.encode()
+        tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
         print("this is fake data")
         tcp_data.print()
 
@@ -145,22 +145,38 @@ class RawSocket:
         return extract_tcp_header(tcp_data)
 
     def receive(self):
-        tcp_data = self._recv()
-        print("should receiving fake data")
-        tcp_data.print()
-        print(tcp_data.payload)
-
-        print("\n\nStart receiving tcp tcp")
-        tcp_data = self._recv()
-        tcp_data.print()
-        print(tcp_data.payload)
 
         tcp_data = self._recv()
         tcp_data.print()
-        print(tcp_data.payload)
+        # print(tcp_data.payload)
+
         tcp_data = self._recv()
         tcp_data.print()
-        print(tcp_data.payload)
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
+
+        tcp_data = self._recv()
+        tcp_data.print()
+        # print(tcp_data.payload)
 
 
 def main():
@@ -172,6 +188,8 @@ def main():
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     t.send(request)
     t.receive()
+    # print("request")
+    # print(len(request))
     #
     # print("local ip: " + t.source_ip)
     # print("local port: " + str(t.source_port))
