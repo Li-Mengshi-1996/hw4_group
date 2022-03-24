@@ -23,7 +23,7 @@ class RawSocket:
             self.tcp_ack = 0
             self.cwnd = 1
             self.slow_start = True
-            self.segment_size = 1000
+            self.segment_size = 10
             self.adwnd = 5840
 
             self.buffer = ""
@@ -64,15 +64,15 @@ class RawSocket:
         flag = get_tcp_flags(psh=1, ack=1)
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
-        p = data.encode()
-        tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
-        print("this is fake data")
-        tcp_data.print()
-        ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
-                               tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
-        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
-        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
-        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+        # p = data.encode()
+        # tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
+        # print("this is fake data")
+        # tcp_data.print()
+        # ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
+        #                        tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
+        # self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+        # self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
+        # self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
         while len(data_pieces) != 0:
             seq_no, split_data = data_pieces.pop(0)

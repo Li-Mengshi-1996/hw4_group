@@ -55,6 +55,7 @@ def split_data_to_send(data, segment_size, tcp_seq):
         result.append((current_seq, data_piece))
         current_seq += len(data_piece)
 
+    print(result)
     return result
 
 def parse_url(url):
