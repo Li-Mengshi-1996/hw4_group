@@ -178,13 +178,13 @@ class RawSocket:
     def receive(self):
         print("receive")
 
-        for i in range(0, 30):
+        for i in range(0, 10):
             tcp_data = self._recv()
             tcp_data.print()
             print(tcp_data.payload)
-            # self.tcp_seq = tcp_data.tcp_ack_seq
-            # self.tcp_ack = tcp_data.tcp_seq + 1
-            # self._send('', get_tcp_flags(ack=1))
+            self.tcp_seq = tcp_data.tcp_ack_seq
+            self.tcp_ack = tcp_data.tcp_seq + 1
+            self._send('', get_tcp_flags(ack=1))
             # print("this is ACK after we receive a bag")
 
         # print(tcp_data.payload)
