@@ -87,20 +87,28 @@ class RawSocket:
         #     self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
             # print("sending data:")
             # print(split_data)
-        while len(data_pieces) != 0:
 
-            seq_no, split_data = data_pieces.pop(0)
-            payload = split_data.encode()
-            tcp_data = TCPHeader(self.source_port, self.destination_port,seq_no, self.tcp_ack,flag, payload=payload)
-            print("\nthis is actual data")
-            tcp_data.print()
+        pointer = 0
 
+        while pointer < len(data):
+            piece = data[pointer: pointer + self.cwnd]
+
+            payload = piece.encode()
+
+            tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=payload)
             ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                    tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
             self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
+            tcp_data = self._recv()
 
+            if tcp_data is None:
+                print("No ack receive")
+                self.cwnd = 1
+                continue
 
+            self.tcp_seq = tcp_data.tcp_ack_seq
+            self.cwnd = min(1000, self.cwnd * 2)
 
     def _send(self, data, flag):
         payload = data.encode()
@@ -166,6 +174,7 @@ class RawSocket:
         return extract_tcp_header(tcp_data)
 
     def receive(self):
+        print("receive")
 
         for i in range(0,15):
             tcp_data = self._recv()
