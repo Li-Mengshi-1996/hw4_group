@@ -42,8 +42,8 @@ class RawSocket:
         self.destination_ip = socket.gethostbyname(host)
         self._send("", get_tcp_flags(syn=1))
 
-        print("\n\n\n\n\n")
-        print("After send:")
+        # print("\n\n\n\n\n")
+        # print("After send:")
 
         tcp_data = self._recv()
         if tcp_data is None or tcp_data.tcp_flags != get_tcp_flags(syn=1, ack=1):
@@ -73,7 +73,7 @@ class RawSocket:
             seq_no, split_data = data_pieces.pop(0)
             payload = split_data.encode()
             tcp_data = TCPHeader(self.source_port, self.destination_port,seq_no, self.tcp_ack,flag, payload=payload)
-            print("this is actual data")
+            print("\nthis is actual data")
             tcp_data.print()
 
             ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
@@ -92,20 +92,20 @@ class RawSocket:
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
-        if flag == get_tcp_flags(ack=1):
-            print("\n\n\n")
-            print("This is local send ACK")
-            tcp_data.print()
-            print("-------------------")
-            ip_tcp_data.print()
-            print("-------------------")
-        elif flag == get_tcp_flags(syn=1):
-            print("\n\n\n")
-            print("This is local send SYN")
-            tcp_data.print()
-            print("-------------------")
-            ip_tcp_data.print()
-            print("-------------------")
+        # if flag == get_tcp_flags(ack=1):
+        #     print("\n\n\n")
+        #     print("This is local send ACK")
+        #     tcp_data.print()
+        #     print("-------------------")
+        #     ip_tcp_data.print()
+        #     print("-------------------")
+        # elif flag == get_tcp_flags(syn=1):
+        #     print("\n\n\n")
+        #     print("This is local send SYN")
+        #     tcp_data.print()
+        #     print("-------------------")
+        #     ip_tcp_data.print()
+        #     print("-------------------")
 
     def _recv_ip_tcp_data(self, delay=60):
         self.recv_socket.settimeout(delay)
@@ -122,9 +122,9 @@ class RawSocket:
                 if check_sum(ip_header_data) != 0:
                     print("IP checksum error")
                     continue
-                print("ip data: ")
-                ip_tcp_data.print()
-                print("----------")
+                # print("ip data: ")
+                # ip_tcp_data.print()
+                # print("----------")
                 return ip_tcp_data.payload
         except:
             print("ERROR")
@@ -135,8 +135,8 @@ class RawSocket:
         if tcp_data is None:
             return None
         psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
-        print("check sum check")
-        print(check_sum(psh))
+        # print("check sum check")
+        # print(check_sum(psh))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
@@ -150,7 +150,7 @@ class RawSocket:
         tcp_data.print()
         print(tcp_data.payload)
 
-        print("Start receiving tcp tcp")
+        print("\n\nStart receiving tcp tcp")
         tcp_data.print()
         print(tcp_data.payload)
 
