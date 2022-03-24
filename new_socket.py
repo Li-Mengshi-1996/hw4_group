@@ -92,7 +92,7 @@ class RawSocket:
 
         while pointer < len(data):
             end = min(pointer + self.cwnd, len(data))
-            piece = data[pointer: pointer + self.cwnd]
+            piece = data[pointer: end]
 
             payload = piece.encode()
 
