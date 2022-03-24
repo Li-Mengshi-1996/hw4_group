@@ -120,20 +120,20 @@ class RawSocket:
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
-        # if flag == get_tcp_flags(ack=1):
-        #     print("\n\n\n")
-        #     print("This is local send ACK")
-        #     tcp_data.print()
-        #     print("-------------------")
-        #     ip_tcp_data.print()
-        #     print("-------------------")
-        # elif flag == get_tcp_flags(syn=1):
-        #     print("\n\n\n")
-        #     print("This is local send SYN")
-        #     tcp_data.print()
-        #     print("-------------------")
-        #     ip_tcp_data.print()
-        #     print("-------------------")
+        if flag == get_tcp_flags(ack=1):
+            print("\n\n\n")
+            print("This is local send ACK")
+            tcp_data.print()
+            print("-------------------")
+            ip_tcp_data.print()
+            print("-------------------")
+        elif flag == get_tcp_flags(syn=1):
+            print("\n\n\n")
+            print("This is local send SYN")
+            tcp_data.print()
+            print("-------------------")
+            ip_tcp_data.print()
+            print("-------------------")
 
     # def _recv_ack(self):
 
