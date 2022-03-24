@@ -64,16 +64,25 @@ class RawSocket:
         flag = get_tcp_flags(psh=1, ack=1)
         data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
 
+        p = "abc".encode()
+        tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
+        print("this is fake data")
+        tcp_data.print()
+
         while len(data_pieces) != 0:
             seq_no, split_data = data_pieces.pop(0)
             payload = split_data.encode()
             tcp_data = TCPHeader(self.source_port, self.destination_port,seq_no, self.tcp_ack,flag, payload=payload)
+            print("this is actual data")
+            tcp_data.print()
 
             ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                    tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
             self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
-            print("sending data:")
-            print(split_data)
+            # print("sending data:")
+            # print(split_data)
+
+
 
 
     def _send(self, data, flag):
@@ -137,6 +146,10 @@ class RawSocket:
 
     def receive(self):
         tcp_data = self._recv()
+        print("should receiving fake data")
+        tcp_data.print()
+        print(tcp_data.payload)
+
         print("Start receiving tcp tcp")
         tcp_data.print()
         print(tcp_data.payload)
