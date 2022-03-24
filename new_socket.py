@@ -68,6 +68,9 @@ class RawSocket:
         tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
         print("this is fake data")
         tcp_data.print()
+        ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
+                               tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
+        self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
 
         while len(data_pieces) != 0:
             seq_no, split_data = data_pieces.pop(0)
@@ -146,7 +149,7 @@ class RawSocket:
 
     def receive(self):
 
-        for i in range(0,40):
+        for i in range(0,10):
             tcp_data = self._recv()
             tcp_data.print()
 
