@@ -63,7 +63,7 @@ class RawSocket:
 
     def send(self, data):
         flag = get_tcp_flags(psh=1, ack=1)
-        data_pieces = split_data_to_send(data,self.segment_size, self.tcp_seq)
+        data_pieces = split_data_to_send(data, self.segment_size, self.tcp_seq)
 
         # p = data.encode()
         # tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
@@ -85,8 +85,8 @@ class RawSocket:
         #     ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
         #                            tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
         #     self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
-            # print("sending data:")
-            # print(split_data)
+        # print("sending data:")
+        # print(split_data)
 
         pointer = 0
 
@@ -95,7 +95,8 @@ class RawSocket:
 
             payload = piece.encode()
 
-            tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=payload)
+            tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag,
+                                 payload=payload)
             ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                    tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
             self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
@@ -106,9 +107,10 @@ class RawSocket:
                 print("No ack receive")
                 self.cwnd = 1
                 continue
-
+            pointer = pointer + self.cwnd
             self.tcp_seq = tcp_data.tcp_ack_seq
             self.cwnd = min(1000, self.cwnd * 2)
+
 
     def _send(self, data, flag):
         payload = data.encode()
@@ -133,7 +135,6 @@ class RawSocket:
         #     print("-------------------")
 
     # def _recv_ack(self):
-
 
     def _recv_ip_tcp_data(self, delay=60):
         self.recv_socket.settimeout(delay)
@@ -176,11 +177,10 @@ class RawSocket:
     def receive(self):
         print("receive")
 
-        for i in range(0,15):
+        for i in range(0, 15):
             tcp_data = self._recv()
             tcp_data.print()
             print(tcp_data.payload)
-
 
         # print(tcp_data.payload)
 
