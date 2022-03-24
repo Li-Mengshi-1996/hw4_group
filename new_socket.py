@@ -183,7 +183,7 @@ class RawSocket:
             tcp_data.print()
             print(tcp_data.payload)
             self.tcp_seq = tcp_data.tcp_ack_seq
-            self.tcp_ack = tcp_data.tcp_seq + 1
+            self.tcp_ack = tcp_data.tcp_seq
             self._send('', get_tcp_flags(ack=1))
 
         # print(tcp_data.payload)
