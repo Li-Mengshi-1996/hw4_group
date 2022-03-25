@@ -1,5 +1,5 @@
-file1 = open("10MB.log","rb")
-file2 = open("10MB_check.log","rb")
+file1 = open("2MB.log","rb")
+file2 = open("2MB_check.log","rb")
 
 print(file1)
 
