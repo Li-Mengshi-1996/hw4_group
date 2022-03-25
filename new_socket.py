@@ -206,7 +206,7 @@ class RawSocket:
         result = ""
 
         for item in sorted_list:
-            result += item[1].decode('ascii')
+            result += item[1].decode('utf-8')
 
         self.recv_dict.clear()
         return result
