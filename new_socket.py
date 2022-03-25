@@ -184,12 +184,12 @@ class RawSocket:
             if tcp_data is None:
                 sys.exit(1)
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
-                self.tcp_seq = tcp_seg.tcp_ack_seq
-                self.tcp_ack = tcp_seg.tcp_seq + 1
-                self._send("",get_tcp_flags(fin=1,ack=1))
+                self.tcp_seq = tcp_data.tcp_ack_seq
+                self.tcp_ack = tcp_data.tcp_seq + 1
+                self._send("", get_tcp_flags(fin=1, ack=1))
                 tcp_data.print()
                 break
-            if tcp_data.tcp_flags & get_tcp_flags(ack = 1) and tcp_data.payload:
+            if tcp_data.tcp_flags & get_tcp_flags(ack=1) and tcp_data.payload:
                 if tcp_data.tcp_seq == self.tcp_ack:
                     tcp_data.print()
                     print(tcp_data.payload)
@@ -197,13 +197,10 @@ class RawSocket:
                     self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
                     self.tcp_seq = tcp_data.tcp_ack_seq
                     self.tcp_ack = self.tcp_ack + len(tcp_data.payload)
-                    self._send("",get_tcp_flags(ack=1))
+                    self._send("", get_tcp_flags(ack=1))
                 else:
                     self.cwnd = 1
                     self._send("", get_tcp_flags(ack=1))
-
-
-
 
             # tcp_data.print()
             # print(tcp_data.payload)
@@ -284,7 +281,7 @@ def main():
 
 #     file.write(content)
 
-    # print(s.recv(1024))
+# print(s.recv(1024))
 
 
 main()
