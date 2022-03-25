@@ -1,5 +1,5 @@
 HTTP/1.1 200 OK
-Date: Fri, 25 Mar 2022 19:10:30 GMT
+Date: Fri, 25 Mar 2022 20:03:11 GMT
 Server: Apache
 Upgrade: h2,h2c
 Connection: Upgrade
@@ -286,4 +286,150 @@ print an error message and close.
 Access to raw sockets requires root privileges on the operating system. Recall that raw sockets are
 promiscuous, i.e. they can observe all packets that arrive at a machine. It would be a security vulnerability
 if any program could open raw sockets, because that would enable you to spy on the network traffic of
-all other users using a shared machine (e.g. one of the CCI
+all other users using a shared machine (e.g. one of the CCIS machines).
+</p><p>
+Since we cannot give you root access to the CCIS machines, you will need to develop your program on
+your own Linux machine, or in a VM. We will be grading your code on a stock Ubuntu Linux 20.04 machine,
+so keep that in mind when developing your code and setting up your VM. <b>Do not develop your program
+on Windows or OSX</b>: the APIs for raw sockets on those systems are incompatible with Linux, and thus
+your code will not work when we grade it.
+</p><p>
+For most of you, the VM option will probably be easiest. There are many
+<a href="https://ubuntu.tutorials24x7.com/blog/how-to-install-ubuntu-20-04-lts-on-windows-using-vmware-workstation-player">tutorials</a>
+on how to do this.
+If you use Windows, you will need a (free) copy of VMWare Player, as well as an ISO of Ubuntu. Once
+you have your VM set up, you will need to install development tools. Exactly what you need will depend
+on what language you want to program in. There are ample instructions online explaining how to install
+gcc, Java, and Python-dev onto Ubuntu.
+</p><p>
+<h2>Modifying IP Tables</h2>
+Regardless of whether you are developing on your own copy of Linux or in a VM, you will need to make
+one change to <i>iptables</i> in order to complete this assignment. You must set a rule in <i>iptables</i>
+that drops outgoing TCP RST packets, using the following command:
+<pre>% iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP</pre>
+To understand why you need this rule, think about how the kernel behaves when it receives unsolicited TCP
+packets. If your computer receives a TCP packet, and there are no open ports waiting to receive that packet,
+the kernel generates a TCP RST packet to let the sender know that the packet is invalid. However, in your
+case, your program is using a raw socket, and thus the kernel has no idea what TCP port you are using. So,
+the kernel will erroneously respond to packets destined for your program with TCP RSTs. You don't want
+the kernel to kill your remote connections, and thus you need to instruct the kernel to drop outgoing
+TCP RST packets. You will need to recreate this rule each 
+1375
+time your reboot your machine/VM.
+</p><p>
+<h2>Debugging</h2>
+Debugging raw socket code can be very challenging. You will need to get comfortable with 
+<a href="http://www.wireshark.org/">Wireshark</a>
+in order to debug your code. Wireshark is a packet sniffer, and can parse all of the relevent fields
+from TCP/IP headers. Using Wireshark, you should be able to tell if you are formatting outgoing
+packets correctly, and if you are correctly parsing incoming packets.
+</p><p>
+<h2>Language</h2>
+You can write your code in whatever language you choose, as long as your code compiles and runs
+on a <b>stock</b> copy of Ubuntu 20.04 <b>on the command line</b>.
+</p><p>
+Be aware that many languages do not support development using raw sockets. I am making an
+explicit exception for Java, allowing the use of the RockSaw library. If you wish to program in
+a language (other than Java) that requires third party library support for raw socket programming,
+<b>ask me for permission</b> before you start development.
+</p><p>
+As usual, do not use libraries that are not installed by default on Ubuntu 20.04
+(with the exception of RockSaw). Similarly, your code must compile and run on the
+command line. You may use IDEs (e.g. Eclipse) during development, but do not turn in your IDE
+project without a Makefile. Make sure you code has <b>no dependencies</b> on your IDE.
+</p><p>
+<h2>Submitting Your Project</h2>
+Before turning in your project, you and your partner(s) must register your group. To register yourself
+in a group, execute the following script:
+<pre>$ /course/cs5700sp22/bin/register project4 [team name]</pre>
+This will either report back success or will give you an error message.  If you have trouble registering,
+please contact the course staff. <b>You and your partner(s) must all run this script with the same 
+[team name]</b>. This is how we know you are part of the same group.
+</p><p>
+To turn-in your project, you should submit your (thoroughly documented) code along with three other files:
+<ul><li>A Makefile that compiles your code.</li>
+<li>A plain-text (no Word or PDF) README file. In this file, you should briefly describe your high-level
+approach, what TCP/IP features you implemented, and any challenges you faced. <b>You must also include a detailed description of which student worked on which part of the code.</b></li>
+<li>If your code is in Java, you must include a copy of the RockSaw library.</li>
+</ul>
+Your README, Makefile, source code, external libraries, etc. should all be placed in a directory. You submit
+your project by running the turn-in script as follows:
+<pre>$ /course/cs5700sp22/bin/turnin project4 [project directory]</pre>
+[project directory] is the name of the directory with your submission. The script will print out every
+file that you are submitting, so make sure that it prints out all of the files you wish to submit!
+
+<b>Only one group member needs to submit your project.</b> Your group may submit as many times as you
+wish; only the last submission will be graded, and the time of the last submission will determine
+whether your assignment is late.
+</p><p>
+<h2>Grading</h2>
+This project is worth 24 points (for CS 4700 students, scale points up to 30). 
+You will receive full credit if 1) your code compiles, runs, and correctly
+downloads files over HTTP, 2) you have not used any illegal libraries, and 3) you use the correct type of
+raw socket. All student code will be scanned by plagarism
+detection software to ensure that students are not copying code from the Internet or each other.
+</p><p>
+8 points will be awarded for each of the three protocols you must implement, i.e. 8 points for HTTP,
+8 ponts for TCP, and 8 points for IP. 1 point will be deducted for poor documentation. Essentially,
+8 points should be easy to earn; the other 16 are the challenge. 
+</p><p>
+<h2>Extra Credit</h2>
+There is an opportunity to earn 4 extra credit points on this assignment. To earn these points, you must
+use and AF_PACKET raw socket in your program, instead of a SOCK_RAW/IPPROTO_RAW socket. An AF_PACKET raw socket
+bypasses the operating systems layer-2 stack as well at layers 3 and 4 (TCP/IP). This means that your
+program must build Ethernet frames for each packet, as well as IP and TCP headers. You can assume that
+we will only test your code on machines with Ethernet connections, i.e. you do not need to worry about
+alternative layer-2 protocols like Wifi or 3G. This extra credit will be quite challenging, since it will
+involve doing MAC resolution with ARP requests. We have not discussed ARP in class, and you will need
+to learn about and handle this protocol on your own. Essentially, the challenge is to figure out the
+MAC address of the gateway, since this information needs to be included in the Ethernet header.
+</p><p>
+<b>If you complete the extra credit, make sure to mention this in your README.</b> Explain how you
+implemented Ethernet functionality, and any additional challenges your faced (e.g. ARP).
+</p>
+
+
+4fa
+    
+    
+    </div> <!-- /container -->
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://david.choffnes.com/jquery-latest.js"></script>
+    <script src="https://david.choffnes.com/bootstrap/js/bootstrap.js"></script>
+
+ <script>
+      !function ($) {
+        $(function(){
+          // Fix for dropdowns on mobile devices
+          $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { 
+              e.stopPropagation(); 
+          });
+          $(document).on('click','.dropdown-menu a',function(){
+              document.location = $(this).attr('href');
+          });
+        })
+      }(window.jQuery)
+    </script>
+
+    <!--script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-2830907-1";
+    urchinTracker();
+    </script-->
+    </body>
+    <div class="navbar-footer-grey">
+    <hr>
+    <p>David Choffnes, Associate Professor, Khoury College of Computer Sciences, Northeastern University. &copy; 2021<br>
+    Last updated
+    <!-- #BeginDate format:Am1 -->February 28, 2022<!-- #EndDate -->.
+    </p>
+    </div>
+    </html>
+
+
+0
+
