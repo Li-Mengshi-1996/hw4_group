@@ -32,6 +32,7 @@ class RawSocket:
             self.buff_size = 10240
             self.packet_id = 0
             self.suppose_to_send = dict()
+            self.recv_dict = dict()
 
         except:
             print("ERROR when creating sockets.")
@@ -112,7 +113,6 @@ class RawSocket:
             self.tcp_seq = tcp_data.tcp_ack_seq
             self.cwnd = min(1000, self.cwnd * 2)
 
-
     def _send(self, data, flag):
         payload = data.encode()
         tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=payload)
@@ -177,7 +177,7 @@ class RawSocket:
     def receive(self):
         print("receive")
 
-        for i in range(0, 25):
+        while True:
             tcp_data = self._recv()
             tcp_data.print()
             print(tcp_data.payload)
@@ -194,49 +194,36 @@ class RawSocket:
             self._send('', get_tcp_flags(ack=1))
             if tcp_data.tcp_flags == 17:
                 break
+            self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
 
-            # print("this is ACK after we receive a bag")
+        tuple_list = []
 
-        # print(tcp_data.payload)
+        for seq in self.recv_dict.keys():
+            tuple_list.append((seq, self.recv_dict[seq]))
 
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
-        #
-        # tcp_data = self._recv()
-        # tcp_data.print()
-        # # print(tcp_data.payload)
+        sorted_list = sorted(tuple_list, key=lambda t: t[0])
+
+        result = ""
+
+        for item in sorted_list:
+            result += item[1].decode()
+
+        self.recv_dict.clear()
+        return result
 
 
 def main():
-    host, file, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     t = RawSocket()
     t.connect(host)
 
     #
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     t.send(request)
-    t.receive()
+    content = t.receive()
+
+    with open(file_name, 'w') as file:
+        file.write(content)
     # print("request")
     # print(len(request))
     #
