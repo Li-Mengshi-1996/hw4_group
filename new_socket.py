@@ -185,8 +185,8 @@ class RawSocket:
             before_ack = self.tcp_ack
             print("ACK before update: " + str(before_ack))
             self.tcp_seq = tcp_data.tcp_ack_seq
-            # self.tcp_ack = tcp_data.tcp_seq + 1
-            self.tcp_ack = self.tcp_ack + 1 + len(tcp_data.payload)
+            self.tcp_ack = tcp_data.tcp_seq + 1
+            # self.tcp_ack = self.tcp_ack + 1 + len(tcp_data.payload)
 
             after_ack = self.tcp_ack
             print("ACK after update: " + str(after_ack))
