@@ -95,7 +95,7 @@ class RawSocket:
             end = min(pointer + self.cwnd, len(data))
             piece = data[pointer: end]
 
-            payload = piece.encode()
+            payload = piece.encode('ascii')
 
             tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag,
                                  payload=payload)
@@ -114,7 +114,7 @@ class RawSocket:
             self.cwnd = min(1000, self.cwnd * 2)
 
     def _send(self, data, flag):
-        payload = data.encode()
+        payload = data.encode('ascii')
         tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag, payload=payload)
         ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
                                tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
@@ -206,7 +206,7 @@ class RawSocket:
         result = ""
 
         for item in sorted_list:
-            result += item[1].decode()
+            result += item[1].decode('ascii')
 
         self.recv_dict.clear()
         return result
