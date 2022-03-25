@@ -187,6 +187,8 @@ class RawSocket:
                 self.tcp_seq = tcp_data.tcp_ack_seq
                 self.tcp_ack = tcp_data.tcp_seq + 1
                 self._send("", get_tcp_flags(fin=1, ack=1))
+                if len(tcp_data.payload) != 0:
+                    self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
                 tcp_data.print()
                 print(tcp_data.payload)
                 break
