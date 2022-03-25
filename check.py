@@ -12,3 +12,5 @@ for i in range(len(lines1)):
     if i >= len(lines2) or lines1[i] != lines2[i]:
         print(i)
         print(lines1[i])
+
+print(len(lines1) - len(lines2))
