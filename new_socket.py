@@ -181,11 +181,18 @@ class RawSocket:
             tcp_data = self._recv()
             tcp_data.print()
             print(tcp_data.payload)
+            print("packet length: " + str(len(tcp_data.payload)))
+            before_ack = self.tcp_ack
+            print("ACK before update: " + str(before_ack))
             self.tcp_seq = tcp_data.tcp_ack_seq
             self.tcp_ack = tcp_data.tcp_seq + 1
+            after_ack = self.tcp_ack
+            print("ACK after update: " + str(after_ack))
+            print("ACK change: " + str(after_ack - before_ack))
             self._send('', get_tcp_flags(ack=1))
             if tcp_data.tcp_flags == 17:
                 break
+
             # print("this is ACK after we receive a bag")
 
         # print(tcp_data.payload)
