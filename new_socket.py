@@ -182,7 +182,7 @@ class RawSocket:
             tcp_data.print()
             print(tcp_data.payload)
             self.tcp_seq = tcp_data.tcp_ack_seq
-            self.tcp_ack = tcp_data.tcp_seq + 1 + len(tcp_data.payload)
+            self.tcp_ack = tcp_data.tcp_seq + 1
             self._send('', get_tcp_flags(ack=1))
             if tcp_data.tcp_flags == 17:
                 break
