@@ -213,8 +213,8 @@ class RawSocket:
 
 
 def main():
-    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     t = RawSocket()
     t.connect(host)
 
