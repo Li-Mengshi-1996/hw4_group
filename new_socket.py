@@ -157,12 +157,14 @@ class RawSocket:
                 # print("----------")
                 return ip_tcp_data.payload
         except:
-            print("ERROR")
+
             return None
 
     def _recv(self, delay=60):
         tcp_data = self._recv_ip_tcp_data(delay=delay)
         if tcp_data is None:
+            self.cwnd = 1
+            print("Time Out.")
             return None
         psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
         # print("check sum check")
@@ -179,22 +181,44 @@ class RawSocket:
 
         while True:
             tcp_data = self._recv()
-            tcp_data.print()
-            print(tcp_data.payload)
-            print("packet length: " + str(len(tcp_data.payload)))
-            before_ack = self.tcp_ack
-            print("ACK before update: " + str(before_ack))
-            self.tcp_seq = tcp_data.tcp_ack_seq
-            # self.tcp_ack = tcp_data.tcp_seq + 1
-            self.tcp_ack = self.tcp_ack + len(tcp_data.payload)
-
-            after_ack = self.tcp_ack
-            print("ACK after update: " + str(after_ack))
-            print("ACK change: " + str(after_ack - before_ack))
-            self._send('', get_tcp_flags(ack=1))
+            if tcp_data is None:
+                sys.exit(1)
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
+                self.tcp_seq = tcp_seg.tcp_ack_seq
+                self.tcp_ack_seq = tcp_seg.tcp_seq + 1
+                self._send("",get_tcp_flags(fin=1,ack=1))
+                tcp_data.print()
                 break
-            self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
+            if tcp_data.tcp_flags & get_tcp_flags(ack = 1) and tcp_data.payload:
+                if tcp_data.tcp_seq == self.tcp_ack_seq:
+                    self.cwnd = min(1000, self.cwnd * 2)
+                    self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
+                    self.tcp_seq = tcp_data.tcp_ack_seq
+                    self.tcp_ack = self.tcp_ack + len(tcp_data.payload)
+                    self._send("",get_tcp_flags(ack=1))
+                else:
+                    self.cwnd = 1
+                    self._send("", get_tcp_flags(ack=1))
+
+
+
+
+            # tcp_data.print()
+            # print(tcp_data.payload)
+            # print("packet length: " + str(len(tcp_data.payload)))
+            # before_ack = self.tcp_ack
+            # print("ACK before update: " + str(before_ack))
+            # self.tcp_seq = tcp_data.tcp_ack_seq
+            # # self.tcp_ack = tcp_data.tcp_seq + 1
+            # self.tcp_ack = self.tcp_ack + len(tcp_data.payload)
+            #
+            # after_ack = self.tcp_ack
+            # print("ACK after update: " + str(after_ack))
+            # print("ACK change: " + str(after_ack - before_ack))
+            # self._send('', get_tcp_flags(ack=1))
+            # if tcp_data.tcp_flags & get_tcp_flags(fin=1):
+            #     break
+            # self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
 
         tuple_list = []
 
