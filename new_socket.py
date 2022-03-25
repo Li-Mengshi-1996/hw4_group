@@ -206,7 +206,7 @@ class RawSocket:
         result = ""
 
         for item in sorted_list:
-            result += item[1].decode('utf-8')
+            result += item[1].decode('ISO-8859-1')
 
         self.recv_dict.clear()
         return result
@@ -239,6 +239,8 @@ def main():
     # s = socket.socket()
     # s.connect((host, 80))
     # s.send(request.encode())
+    #
+    # print(s.recv(65536).decode('ISO-8859-1'))
     #
     # content = ""
     # while True:
