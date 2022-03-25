@@ -203,7 +203,7 @@ class RawSocket:
 
         sorted_list = sorted(tuple_list, key=lambda t: t[0])
 
-        result = ""
+        result = b""
 
         for item in sorted_list:
             result += item[1]
