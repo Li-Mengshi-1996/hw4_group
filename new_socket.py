@@ -188,6 +188,7 @@ class RawSocket:
                 self.tcp_ack = tcp_data.tcp_seq + 1
                 self._send("", get_tcp_flags(fin=1, ack=1))
                 tcp_data.print()
+                print(tcp_data.payload)
                 break
             if tcp_data.tcp_flags & get_tcp_flags(ack=1) and tcp_data.payload:
                 if tcp_data.tcp_seq == self.tcp_ack:
@@ -238,6 +239,7 @@ class RawSocket:
 def main():
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     t = RawSocket()
     t.connect(host)
 
