@@ -206,7 +206,7 @@ class RawSocket:
         result = ""
 
         for item in sorted_list:
-            result += item[1].decode('ISO-8859-1')
+            result += item[1]
 
         self.recv_dict.clear()
         return result
@@ -224,7 +224,7 @@ def main():
     t.send(request)
     content = t.receive()
 
-    with open(file_name, 'w') as file:
+    with open(file_name, 'wb') as file:
         file.write(content)
 
     # print("request")
@@ -236,11 +236,14 @@ def main():
     # print("remote ip: " + t.destination_ip)
     # print("remote port: " + str(t.destination_port))
 
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    # request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
     # s = socket.socket()
     # s.connect((host, 80))
     # s.send(request.encode())
     #
-    # print(s.recv(65536).decode('ISO-8859-1'))
+    # content = s.recv(65536)
     #
     # content = ""
     # while True:
@@ -249,7 +252,7 @@ def main():
     #     if content.find("/html>") != -1:
     #         break
     #
-    # with open("test.php", 'w') as file:
+    # with open(file_name, 'wb') as file:
     #     file.write(content)
 
 
