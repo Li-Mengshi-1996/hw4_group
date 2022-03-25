@@ -213,17 +213,20 @@ class RawSocket:
 
 
 def main():
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     t = RawSocket()
     t.connect(host)
 
     #
     request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
+
     t.send(request)
     content = t.receive()
 
     with open(file_name, 'w') as file:
         file.write(content)
+
     # print("request")
     # print(len(request))
     #
@@ -235,7 +238,21 @@ def main():
 
     # s = socket.socket()
     # s.connect((host, 80))
-    # s.send(t.test.encode())
+    # s.send(request.encode())
+    #
+    # content = ""
+    # while True:
+    #     content += s.recv(65536).decode()
+    #
+    #     if content.find("/html>") != -1:
+    #         break
+    #
+    # with open("test.php", 'w') as file:
+    #     file.write(content)
+
+
+#     file.write(content)
+
     # print(s.recv(1024))
 
 
