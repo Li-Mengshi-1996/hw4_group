@@ -192,7 +192,7 @@ class RawSocket:
             print("ACK after update: " + str(after_ack))
             print("ACK change: " + str(after_ack - before_ack))
             self._send('', get_tcp_flags(ack=1))
-            if tcp_data.tcp_flags == 17:
+            if tcp_data.tcp_flags == 17 or tcp_data.tcp_flags == 25:
                 break
             self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
 
