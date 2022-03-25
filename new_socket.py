@@ -185,12 +185,12 @@ class RawSocket:
                 sys.exit(1)
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
                 self.tcp_seq = tcp_seg.tcp_ack_seq
-                self.tcp_ack_seq = tcp_seg.tcp_seq + 1
+                self.tcp_ack = tcp_seg.tcp_seq + 1
                 self._send("",get_tcp_flags(fin=1,ack=1))
                 tcp_data.print()
                 break
             if tcp_data.tcp_flags & get_tcp_flags(ack = 1) and tcp_data.payload:
-                if tcp_data.tcp_seq == self.tcp_ack_seq:
+                if tcp_data.tcp_seq == self.tcp_ack:
                     self.cwnd = min(1000, self.cwnd * 2)
                     self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
                     self.tcp_seq = tcp_data.tcp_ack_seq
