@@ -29,7 +29,7 @@ class RawSocket:
             self.buffer = ""
 
             self.test = ""
-            self.buff_size = 10240
+            self.buff_size = 65535
             self.packet_id = 0
             self.suppose_to_send = dict()
             self.recv_dict = dict()

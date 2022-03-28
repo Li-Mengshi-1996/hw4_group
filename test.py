@@ -19,3 +19,6 @@ a = (2 << 4)
 print(a)
 
 # iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP
+
+# a6020a2bd05e9217f52bc1568cc28077
+# a6020a2bd05e9217f52bc1568cc28077
