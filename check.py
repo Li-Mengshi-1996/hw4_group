@@ -14,3 +14,15 @@ for i in range(len(lines1)):
         print(lines1[i])
 
 print(len(lines1) - len(lines2))
+
+# file3 = open("Project 4 CS 5700 Fundamentals of Computer Networking David Choffnes, Ph.D.html")
+#
+# lines3 = file3.readlines()
+#
+# content = ""
+#
+# for i in range(len(lines3)):
+#     content += lines3[i]
+#
+# with open("html.php", 'w') as file:
+#     file.write(content)
