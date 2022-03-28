@@ -77,14 +77,14 @@ def extract_tcp_header(data):
     tcp_doff = tcp_offset_res >> 4
     adwnd = socket.ntohs(tcp_window)
     payload = data[20:]
-    result = TCPHeader(tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_flags, tcp_doff, adwnd, tcp_urg_ptr, payload)
+    result = TCPHeader(tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_flags, tcp_doff, adwnd, tcp_urg_ptr, payload, tcp_check)
 
     return result
 
 
 class TCPHeader:
     def __init__(self, tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, flag, tcp_doff=5, adwnd=64240, tcp_urg_ptr=0,
-                 payload=b''):
+                 payload=b'', tcp_check=0):
         self.tcp_source = tcp_source
         self.tcp_dest = tcp_dest
 
@@ -93,7 +93,7 @@ class TCPHeader:
 
         self.tcp_doff = tcp_doff
         self.tcp_window = socket.htons(adwnd)
-        self.tcp_check = 0
+        self.tcp_check = tcp_check
         self.tcp_urg_ptr = tcp_urg_ptr
 
         self.tcp_flags = flag
