@@ -106,6 +106,7 @@ class TCPHeader:
         print("sequence number: " + str(self.tcp_seq))
         print("ACK sequence number: " + str(self.tcp_ack_seq))
         print("Flag: " + str(self.tcp_flags))
+        print("TCP check: " + str(self.tcp_check))
 
     def create_tcp_header(self, source_ip, destination_ip):
         tcp_offset_res = (self.tcp_doff << 4) + 0

@@ -167,8 +167,8 @@ class RawSocket:
             print("Time Out.")
             return None
         psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
-        # print("check sum check")
-        # print(check_sum(psh))
+        print("check sum check")
+        print(check_sum(psh))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
