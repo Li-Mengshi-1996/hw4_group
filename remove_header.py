@@ -1,4 +1,4 @@
-file1 = open("2MB_try.log", "rb")
+file1 = open("2MB.log", "rb")
 # file2 = open("2MB_check.log", "rb")
 
 
