@@ -59,23 +59,18 @@ def split_data_to_send(data, segment_size, tcp_seq):
     return result
 
 
-def check_tcp_checksum(tcp_data, destination_ip, source_ip):
-    tcp_offset_res = (tcp_data.tcp_doff << 4) + 0
+def calculate_checksum(packet):
+    cks = 0
+    if len(packet) % 2 != 0:
+        packet += b'\0'
+    for i in range(0, len(packet), 2):
+        w = (packet[i] << 8) + (packet[i+1])
+        cks += w
 
-    tcp_header = pack('!HHLLBBHHH', tcp_data.tcp_source, tcp_data.tcp_dest, tcp_data.tcp_seq,
-                      tcp_data.tcp_ack_seq, tcp_offset_res,
-                      tcp_data.tcp_flags, tcp_data.tcp_window, tcp_data.tcp_check, tcp_data.tcp_urg_ptr)
+    cks = (cks >> 16) + (cks & 0xffff)
+    cks = ~cks & 0xffff
 
-    tcp_length = len(tcp_header) + len(tcp_data.payload)
-
-    psh = create_psh(destination_ip, source_ip, socket.IPPROTO_TCP, tcp_length)
-    psh = psh + tcp_header + tcp_data.payload
-
-    print("check sum check")
-    result = check_sum(psh)
-    print(check_sum(psh))
-
-    return result
+    return cks
 
 
 def parse_url(url):
