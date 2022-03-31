@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -377,8 +376,6 @@ MAC address of the gateway, since this information needs to be included in the E
 implemented Ethernet functionality, and any additional challenges your faced (e.g. ARP).
 </p>
 
-
-4fa
     
     
     </div> <!-- /container -->
@@ -418,5 +415,4 @@ implemented Ethernet functionality, and any additional challenges your faced (e.
     </p>
     </div>
     </html>
-
 
