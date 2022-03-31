@@ -39,9 +39,13 @@ import re
 #    html = response.read()
 #    print(html)
 
-a = b'\r\n\r\n1375\r\nabc\r\nxyz\r\n'
-result = re.findall(b'\r\n\w*\r\n',a)
-print(result)
+a = b'\r\n\r\n4000\r\nabc\r\n4000\r\n'
+result = re.search(rb'4000\r\n',a)
+print(result.group(1))
 
 # print(int(b"1234",16))
 # print(b"x".join([b'1',b'2']))
+
+# file = open("index.html","rb")
+# content = file.read()
+# print(content)

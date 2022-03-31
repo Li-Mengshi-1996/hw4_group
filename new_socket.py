@@ -305,7 +305,10 @@ def main():
         print("Non-200 status code")
         sys.exit()
 
-    content = re.sub(rb'4000\r\n', b"", content)
+    left = content.find(b'4000\r\n')
+    right = left + len(b'4000\r\n')
+
+    content = content[0:left] + content[right:]
 
     content = re.sub(rb'\r\n0\r\n\r\n', b"", content)
 
