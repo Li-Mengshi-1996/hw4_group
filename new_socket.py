@@ -285,10 +285,13 @@ class RawSocket:
 #
 #
 def main():
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/")
+    # print(file_name)
+    # return
     t = RawSocket()
     t.connect(host)
 
@@ -302,9 +305,6 @@ def main():
         print("Non-200 status code")
         sys.exit()
 
-    # header = content.split(b"/r/n")[0]
-    # print("content header:")
-    # print(header)
     content = re.sub(rb'4000\r\n', b"", content)
 
     content = re.sub(rb'\r\n0\r\n\r\n', b"", content)

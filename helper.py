@@ -86,7 +86,9 @@ def parse_url(url):
     url_list = url.split("/")
     host = url_list[0]
 
-    if len(url_list) == 1 or url_list[1] == "":
+    print(url_list)
+
+    if url.endswith("/") or len(url_list) == 1 or url_list[1] == "":
         file = "index.html"
     else:
         file = url_list[len(url_list) - 1]
