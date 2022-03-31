@@ -185,7 +185,7 @@ class RawSocket:
 
             tcp_header = pack('!HHLLBBHHH', tcp_data.tcp_source, tcp_data.tcp_dest, tcp_data.tcp_seq,
                               tcp_data.tcp_ack_seq, tcp_offset_res,
-                              tcp_data.tcp_flags, tcp_data.tcp_window, 0, tcp_data.tcp_urg_ptr)
+                              tcp_data.tcp_flags, tcp_data.tcp_window, tcp_data.tcp_check, tcp_data.tcp_urg_ptr)
 
             tcp_length = len(tcp_header) + len(tcp_data.payload)
 
