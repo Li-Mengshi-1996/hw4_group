@@ -3,17 +3,17 @@ import socket
 
 
 
-# host = "david.choffnes.com"
-# path = "/classes/cs4700sp22/project4.php"
+host = "david.choffnes.com"
+path = "/classes/cs4700sp22/project4.php"
 #
-# socket = socket.socket()
-# socket.connect((host,80))
+socket = socket.socket()
+socket.connect((host,80))
 #
-# get_msg = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
-#
-# socket.send(get_msg.encode())
-#
-# print(socket.recv(1024).decode())
+get_msg = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + "\r\n"+"Accept: text/html"+'\r\n\r\n'
+
+socket.send(get_msg.encode())
+
+print(socket.recv(1024).decode())
 
 # a = (2 << 4)
 # print(a)
@@ -23,14 +23,19 @@ import socket
 # a6020a2bd05e9217f52bc1568cc28077
 # a6020a2bd05e9217f52bc1568cc28077
 
-import re
-pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
-a = b"123434\r\n2\r\n3abc4\r"
+# import re
+# pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
+# a = b"123434\r\n2\r\n3abc4\r"
+#
+# content = re.sub(rb'\r\n\w\r\n', b"", a)
+#
+#
+#
+# print(content)
 
-content = re.sub(rb'\r\n\w\r\n', b"", a)
-
-
-
-print(content)
+# import urllib.request
+# with urllib.request.urlopen('https://david.choffnes.com/classes/cs4700sp22/project4.php') as response:
+#    html = response.read()
+#    print(html)
 
 

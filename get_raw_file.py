@@ -36,7 +36,7 @@ with socket.create_connection((host, 443)) as sock:
         content = b""
 
         while True:
-            temp = ssock.recv(65536)
+            temp = ssock.recvfrom(65536)
             content += temp
             # print(temp)
             # print("break")

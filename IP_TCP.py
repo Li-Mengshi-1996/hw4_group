@@ -67,6 +67,9 @@ class IPHeader:
         ip_ihl_ver = (self.ip_ver << 4) + self.ip_ihl
         ip_header = pack('!BBHHHBBH4s4s', ip_ihl_ver, self.ip_tos, self.ip_tot_len, self.ip_id, self.ip_frag_off,
                          self.ip_ttl, self.ip_proto, self.ip_check, self.ip_saddr, self.ip_daddr)
+        self.ip_check = check_sum(ip_header)
+        ip_header = pack('!BBHHHBB', ip_ihl_ver, self.ip_tos, self.ip_tot_len, self.ip_id, self.ip_frag_off,
+                         self.ip_ttl, self.ip_proto) + pack('H', self.ip_check) + pack('!4s4s', self.ip_saddr, self.ip_daddr)
 
         return ip_header + self.payload
 
