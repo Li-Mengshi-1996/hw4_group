@@ -1,13 +1,4 @@
-HTTP/1.1 200 OK
-Date: Thu, 31 Mar 2022 18:41:19 GMT
-Server: Apache
-Upgrade: h2,h2c
-Connection: Upgrade
-Vary: Accept-Encoding,User-Agent
-Transfer-Encoding: chunked
-Content-Type: text/html; charset=UTF-8
 
-4000
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -313,9 +304,7 @@ the kernel generates a TCP RST packet to let the sender know that the packet is 
 case, your program is using a raw socket, and thus the kernel has no idea what TCP port you are using. So,
 the kernel will erroneously respond to packets destined for your program with TCP RSTs. You don't want
 the kernel to kill your remote connections, and thus you need to instruct the kernel to drop outgoing
-TCP RST packets. You will need to recreate this rule each 
-1375
-time your reboot your machine/VM.
+TCP RST packets. You will need to recreate this rule each time your reboot your machine/VM.
 </p><p>
 <h2>Debugging</h2>
 Debugging raw socket code can be very challenging. You will need to get comfortable with 
@@ -430,6 +419,4 @@ implemented Ethernet functionality, and any additional challenges your faced (e.
     </div>
     </html>
 
-
-0
 
