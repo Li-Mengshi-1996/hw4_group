@@ -302,9 +302,7 @@ def main():
     # print("content header:")
     # print(header)
 
-    pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
-
-    content = re.sub(pattern, b"", content)
+    content = re.sub(rb'\r\n[1-9]\d*\r\n', b"", content)
 
     t.close()
 

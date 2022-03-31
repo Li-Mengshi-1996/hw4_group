@@ -15,10 +15,22 @@ import socket
 #
 # print(socket.recv(1024).decode())
 
-a = (2 << 4)
-print(a)
+# a = (2 << 4)
+# print(a)
 
 # iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP
 
 # a6020a2bd05e9217f52bc1568cc28077
 # a6020a2bd05e9217f52bc1568cc28077
+
+import re
+pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
+a = b"123434\r\n234\r\n3abc4\r"
+
+content = re.sub(rb'\r\n[1-9]\d*\r\n', b"", a)
+
+
+
+print(content)
+
+
