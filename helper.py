@@ -97,5 +97,23 @@ def parse_url(url):
 
     return host, file, path
 
+def parse_response(response):
+    status_line, response = response.split(b'\r\n', 1)
+    status_line = status_line.decode('ascii')
+    version, code, reason_phrase = status_line.split(" ", 2)
+    headers, content = response.split(b'\r\n\r\n', 1)
+    headers = headers.decode('ascii')
+    cookies = dict()
+    parsed_headers = dict()
+    for h in headers.split('\r\n'):
+        key, value = h.split(': ', 1)
+        if key == 'Set-Cookie':
+            c = value.split("; ", 1)[0]
+            cookie_key, cookie_value = c.split("=", 1)
+            cookies[cookie_key] = cookie_value
+        else:
+            parsed_headers[key] = value
+    return code, reason_phrase, content, cookies, parsed_headers
+
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))

@@ -296,9 +296,14 @@ def main():
     t.send(request)
     content = t.receive()
 
-    header = content.split(b"/r/n")[0]
-    print("content header:")
-    print(header)
+    # header = content.split(b"/r/n")[0]
+    # print("content header:")
+    # print(header)
+
+    res = content.split(b"\r\n\r\n", 1)[-1]
+    print("res:")
+    print(res)
+
 
 
     t.close()
