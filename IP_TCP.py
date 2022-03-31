@@ -78,8 +78,6 @@ def extract_tcp_header(data):
     adwnd = socket.ntohs(tcp_window)
     payload = data[20:]
 
-    print("TCP check when create: " + str(tcp_check))
-
     result = TCPHeader(tcp_source, tcp_dest, tcp_seq, tcp_ack_seq, tcp_flags, tcp_doff, adwnd, tcp_urg_ptr, payload, tcp_check)
 
     return result
