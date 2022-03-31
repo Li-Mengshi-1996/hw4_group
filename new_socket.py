@@ -172,9 +172,9 @@ class RawSocket:
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
-        # if check_sum(psh) != 0:
-        #     print("TCP checksum error")
-        #     return None
+        if check_sum(psh) != 0:
+            print("TCP checksum error")
+            return None
 
         return extract_tcp_header(tcp_data)
 
