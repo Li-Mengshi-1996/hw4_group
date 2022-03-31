@@ -172,9 +172,9 @@ class RawSocket:
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
-        if check_sum(psh) != 0:
-            print("TCP checksum error")
-            return None
+        # if check_sum(psh) != 0:
+        #     print("TCP checksum error")
+        #     return None
 
         return extract_tcp_header(tcp_data)
 
@@ -289,7 +289,7 @@ def main():
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
-    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/")
     # print(file_name)
     # return
     t = RawSocket()
@@ -318,8 +318,8 @@ def main():
 
     t.close()
 
-    with open(file_name, 'wb') as file:
-        file.write(content)
+    # with open(file_name, 'wb') as file:
+    #     file.write(content)
 
 
 main()
