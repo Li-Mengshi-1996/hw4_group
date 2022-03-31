@@ -189,7 +189,7 @@ class RawSocket:
 
             tcp_length = len(tcp_header) + len(tcp_data.payload)
 
-            psh = create_psh(tcp_data.source_ip, tcp_data.destination_ip, socket.IPPROTO_TCP, tcp_length)
+            psh = create_psh(self.destination_ip, self.source_ip, socket.IPPROTO_TCP, tcp_length)
             psh = psh + tcp_header + tcp_data.payload
 
             # psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
