@@ -311,7 +311,7 @@ def main():
 
     content = re.sub(rb'\r\n0\d*\r\n\r\n', b"", content)
 
-    content = re.sub(rb'\r\n\r\n4f\w', b"", content)
+    content = re.sub(rb'\r\n4f\w\r\n', b"", content)
 
     parse = content.find(b"\r\n\r\n")
     content = content[parse + len(b"\r\n\r\n"):]
