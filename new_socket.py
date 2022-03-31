@@ -297,7 +297,7 @@ def main():
     content = t.receive()
 
     header = content.split(b"/r/n")[0]
-    print("header")
+    print("content header:")
     print(header)
 
 
