@@ -166,9 +166,9 @@ class RawSocket:
             self.cwnd = 1
             print("Time Out.")
             return None
-        psh = create_psh(self.destination_ip, self.source_ip, socket.IPPROTO_TCP, len(tcp_data))
-
-        print("check: " + str(check_sum(psh + tcp_data)))
+        # psh = create_psh(self.destination_ip, self.source_ip, socket.IPPROTO_TCP, len(tcp_data))
+        #
+        # print("check: " + str(check_sum(psh + tcp_data)))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
@@ -198,12 +198,11 @@ class RawSocket:
             # # psh = create_psh(self.source_ip, self.destination_ip, socket.IPPROTO_TCP, len(tcp_data))
             # print("check sum check")
             # print(check_sum(psh))
-
-
-
-
-
-
+            check = check_tcp_checksum(tcp_data, self.destination_ip, self.source_ip)
+            if check != 0:
+                self.cwnd = 1
+                self._send("", get_tcp_flags(ack=1))
+                continue
 
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
                 self.tcp_seq = tcp_data.tcp_ack_seq
@@ -261,8 +260,8 @@ class RawSocket:
 
 
 def main():
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
     t = RawSocket()

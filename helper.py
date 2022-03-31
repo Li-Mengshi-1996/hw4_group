@@ -72,7 +72,10 @@ def check_tcp_checksum(tcp_data, destination_ip, source_ip):
     psh = psh + tcp_header + tcp_data.payload
 
     print("check sum check")
+    result = check_sum(psh)
     print(check_sum(psh))
+
+    return result
 
 
 def parse_url(url):
