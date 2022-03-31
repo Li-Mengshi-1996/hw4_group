@@ -302,12 +302,13 @@ def main():
     # print("content header:")
     # print(header)
 
-    content = re.sub(rb'\r\n[1-9]\d*\r\n', b"", content)
+    content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
+    print(content)
 
     t.close()
 
-    with open(file_name, 'wb') as file:
-        file.write(content)
+    # with open(file_name, 'wb') as file:
+    #     file.write(content)
 
 
 main()
