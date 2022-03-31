@@ -145,7 +145,7 @@ class RawSocket:
                 data = self.recv_socket.recv(self.buff_size)
                 ip_header_data = data[0:20]
                 ip_tcp_data = extract_ip_header(data)
-                print("success")
+
 
                 if ip_tcp_data.source_ip != self.destination_ip or ip_tcp_data.destination_ip != self.source_ip:
                     continue
@@ -155,6 +155,8 @@ class RawSocket:
                 # print("ip data: ")
                 # ip_tcp_data.print()
                 # print("----------")
+                print("success")
+                print(data)
                 return ip_tcp_data.payload
         except:
 
