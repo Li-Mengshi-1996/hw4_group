@@ -25,9 +25,9 @@ import socket
 
 import re
 pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
-a = b"123434\r\n234\r\n3abc4\r"
+a = b"123434\r\n2\r\n3abc4\r"
 
-content = re.sub(rb'\r\n[1-9]\d*\r\n', b"", a)
+content = re.sub(rb'\r\n\w\r\n', b"", a)
 
 
 

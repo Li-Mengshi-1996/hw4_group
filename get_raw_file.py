@@ -52,17 +52,17 @@ with socket.create_connection((host, 443)) as sock:
             file.write(content)
 
 
-file_new = open("hello.php", 'rb')
-
-lines = file_new.readlines()
-
-for line in lines:
-    temp = line.strip()
-
-    try:
-        print(int(temp))
-    except:
-        continue
+# file_new = open("hello.php", 'rb')
+#
+# lines = file_new.readlines()
+#
+# for line in lines:
+#     temp = line.strip()
+#
+#     try:
+#         print(int(temp))
+#     except:
+#         continue
 
 
 
