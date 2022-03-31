@@ -261,7 +261,7 @@ class RawSocket:
     def teardown(self):
         self._send("",get_tcp_flags(fin=1, ack=1))
         tcp_data = self._recv()
-        if tcp_data is None or tcp_data.flags & get_tcp_flags(ack=1) == 0:
+        if tcp_data is None or tcp_data.tcp_flags & get_tcp_flags(ack=1) == 0:
             print("Teardown fails.")
             return False
         self.tcp_seq = tcp_data.ack_no
