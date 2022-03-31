@@ -199,10 +199,10 @@ class RawSocket:
             # print("check sum check")
             # print(check_sum(psh))
             check = check_tcp_checksum(tcp_data, self.destination_ip, self.source_ip)
-            if check != 0:
-                self.cwnd = 1
-                self._send("", get_tcp_flags(ack=1))
-                continue
+            # if check != 0:
+            #     self.cwnd = 1
+            #     self._send("", get_tcp_flags(ack=1))
+            #     continue
 
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
                 self.tcp_seq = tcp_data.tcp_ack_seq
