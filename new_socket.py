@@ -5,6 +5,7 @@ from helper import *
 import time
 from random import randint
 from IP_TCP import *
+import re
 
 
 class RawSocket:
@@ -146,7 +147,6 @@ class RawSocket:
                 ip_header_data = data[0:20]
                 ip_tcp_data = extract_ip_header(data)
 
-
                 if ip_tcp_data.source_ip != self.destination_ip or ip_tcp_data.destination_ip != self.source_ip:
                     continue
                 if check_sum(ip_header_data) != 0:
@@ -168,7 +168,7 @@ class RawSocket:
             self.cwnd = 1
             print("Time Out.")
             return None
-        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip,len(tcp_data))
+        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
@@ -261,7 +261,7 @@ class RawSocket:
         return result
 
     def teardown(self):
-        self._send("",get_tcp_flags(fin=1, ack=1))
+        self._send("", get_tcp_flags(fin=1, ack=1))
         tcp_data = self._recv()
         if tcp_data is None or tcp_data.tcp_flags & get_tcp_flags(ack=1) == 0:
             print("Teardown fails.")
@@ -279,6 +279,8 @@ class RawSocket:
             self.send_socket.close()
         else:
             print("Teardown fails. Please try again")
+
+
 #
 #
 #
@@ -300,16 +302,14 @@ def main():
     # print("content header:")
     # print(header)
 
-    res = content.split(b"\r\n\r\n", 1)[-1]
-    print("res:")
-    print(res)
+    pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
 
-
+    content = re.sub(pattern, b"", content)
 
     t.close()
 
-    # with open(file_name, 'wb') as file:
-    #     file.write(content)
+    with open(file_name, 'wb') as file:
+        file.write(content)
 
 
 main()
