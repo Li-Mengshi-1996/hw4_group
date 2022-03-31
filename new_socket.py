@@ -184,8 +184,8 @@ class RawSocket:
             if tcp_data is None:
                 sys.exit(1)
 
-            print("Sum: ")
-            print(tcp_data.tcp_flags + len(tcp_data.payload))
+            print("length: ")
+            print(len(tcp_data.payload))
 
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
                 self.tcp_seq = tcp_data.tcp_ack_seq
