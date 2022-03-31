@@ -156,7 +156,7 @@ class RawSocket:
                 # ip_tcp_data.print()
                 # print("----------")
                 print("success")
-                print(data)
+                # print(data)
                 return ip_tcp_data.payload
         except:
 
@@ -170,7 +170,7 @@ class RawSocket:
             return None
         psh = get_pseudo_ip_header(self.destination_ip, self.source_ip,len(tcp_data))
 
-        print("check: " + str(calculate_checksum(psh + tcp_data)))
+        # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
@@ -212,13 +212,13 @@ class RawSocket:
                 self._send("", get_tcp_flags(fin=1, ack=1))
                 if len(tcp_data.payload) != 0:
                     self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
-                tcp_data.print()
-                print(tcp_data.payload)
+                # tcp_data.print()
+                # print(tcp_data.payload)
                 break
             if tcp_data.tcp_flags & get_tcp_flags(ack=1) and tcp_data.payload:
                 if tcp_data.tcp_seq == self.tcp_ack:
-                    tcp_data.print()
-                    print(tcp_data.payload)
+                    # tcp_data.print()
+                    # print(tcp_data.payload)
                     self.cwnd = min(1000, self.cwnd * 2)
                     self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
                     self.tcp_seq = tcp_data.tcp_ack_seq
@@ -297,6 +297,7 @@ def main():
     content = t.receive()
 
     header = content.split(b"/r/n")[0]
+    print("header")
     print(header)
 
 
