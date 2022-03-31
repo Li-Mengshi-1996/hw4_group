@@ -296,6 +296,10 @@ def main():
     t.send(request)
     content = t.receive()
 
+    header = content.split(b"/r/n")[0]
+    print(header)
+
+
     t.close()
 
     # with open(file_name, 'wb') as file:
