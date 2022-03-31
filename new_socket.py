@@ -310,9 +310,7 @@ def main():
     content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
 
     parse = content.find(b"\r\n\r\n")
-    content = content[parse + len(b"\r\n\r\n") - 1:]
-
-    print(content[1:3000])
+    content = content[parse + len(b"\r\n\r\n"):]
 
     t.close()
 
