@@ -307,9 +307,9 @@ def main():
     # print(header)
     content = re.sub(rb'4000\r\n', b"", content)
 
-    content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
+    content = re.sub(rb'\r\n0\r\n\r\n', b"", content)
 
-    content = re.sub(rb'\r\n0\d*\r\n\r\n', b"", content)
+    content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
 
     content = re.sub(rb'\r\n4f\w\r\n', b"", content)
 
