@@ -264,8 +264,8 @@ class RawSocket:
         if tcp_data is None or tcp_data.tcp_flags & get_tcp_flags(ack=1) == 0:
             print("Teardown fails.")
             return False
-        self.tcp_seq = tcp_data.ack_no
-        self.tcp_ack = tcp_data.seq_no + 1
+        self.tcp_seq = tcp_data.tcp_ack_seq
+        self.tcp_ack = tcp_data.tcp_seq + 1
         if tcp_data.flags & get_tcp_flags(fin=1):
             self._send("", get_tcp_flags(ack=1))
 
