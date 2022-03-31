@@ -24,7 +24,7 @@ import socket
 # a6020a2bd05e9217f52bc1568cc28077
 # a6020a2bd05e9217f52bc1568cc28077
 
-# import re
+import re
 # pattern = re.compile(rb'\\r\\n[1-9]\d*\\r\\n')
 # a = b"123434\r\n2\r\n3abc4\r"
 #
@@ -39,5 +39,9 @@ import socket
 #    html = response.read()
 #    print(html)
 
-print(len(b'HTTP/1.1 200 OK\r\nDate: Thu, 31 Mar 2022 22:33:53 GMT\r\nServer: Apache\r\nUpgrade: h2,h2c\r\nConnection: Upgrade\r\nVary: Accept-Encoding,User-Agent\r\nTransfer-Encoding: chunked\r\nContent-Type: text/html; charset=UTF-8\r\n'))
-print(len(b'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Project 4: CS 5700 Fundamentals of Computer Networking: David Choffnes, Ph.D.</title>\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<meta name="description" content="Homepage for David Choffnes, Ph.D., Associate Professor in Computer Science, Executive Director of the Cybersecurity and Privacy Institute at Northeastern University">\n<meta name="author" content="">\n<!--script type="text/javascript">\n\n  var _gaq = _gaq || [];\n  _gaq.push([\'_setAccount\', \'UA-2830907-1\']);\n  _gaq.push([\'_setDomainName\', \'choffnes.com\']);\n  _gaq.push([\'_trackPageview\']);\n\n  (function() {\n    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;\n    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';\n    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);\n  })();\n\n</script-->\n\n\n\n<!-- Le styles -->\n<link href="https://david.choffnes.com/bootstrap/css/bootstrap.css" rel="stylesheet">\n<style>\nbody {\n    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */\n\tpadding-bottom: 60'))
+a = b'\r\n\r\n1375\r\nabc\r\nxyz\r\n'
+result = re.findall(b'\r\n\w*\r\n',a)
+print(result)
+
+# print(int(b"1234",16))
+# print(b"x".join([b'1',b'2']))
