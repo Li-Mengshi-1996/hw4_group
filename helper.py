@@ -58,6 +58,23 @@ def split_data_to_send(data, segment_size, tcp_seq):
     print(result)
     return result
 
+
+def check_tcp_checksum(tcp_data, destination_ip, source_ip):
+    tcp_offset_res = (tcp_data.tcp_doff << 4) + 0
+
+    tcp_header = pack('!HHLLBBHHH', tcp_data.tcp_source, tcp_data.tcp_dest, tcp_data.tcp_seq,
+                      tcp_data.tcp_ack_seq, tcp_offset_res,
+                      tcp_data.tcp_flags, tcp_data.tcp_window, tcp_data.tcp_check, tcp_data.tcp_urg_ptr)
+
+    tcp_length = len(tcp_header) + len(tcp_data.payload)
+
+    psh = create_psh(destination_ip, source_ip, socket.IPPROTO_TCP, tcp_length)
+    psh = psh + tcp_header + tcp_data.payload
+
+    print("check sum check")
+    print(check_sum(psh))
+
+
 def parse_url(url):
     url = url.replace("http://", "")
     url = url.replace("https://", "")
@@ -75,6 +92,5 @@ def parse_url(url):
 
     return host, file, path
 
-
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
-print(get_tcp_flags(ack=1))
+# print(get_tcp_flags(ack=1))
