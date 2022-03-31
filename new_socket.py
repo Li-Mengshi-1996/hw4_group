@@ -166,9 +166,9 @@ class RawSocket:
             self.cwnd = 1
             print("Time Out.")
             return None
-        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
+        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip,len(tcp_data))
 
-        print("check: " + str(check_sum(psh + tcp_data)))
+        print("check: " + str(calculate_checksum(psh + tcp_data)))
 
         # if check_sum(psh) != 0:
         #     print("TCP checksum error")
@@ -275,7 +275,6 @@ def main():
 
     # with open(file_name, 'wb') as file:
     #     file.write(content)
-
 
 
 main()
