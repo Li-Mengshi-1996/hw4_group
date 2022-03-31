@@ -279,9 +279,9 @@ class RawSocket:
             self.send_socket.close()
         else:
             print("Teardown fails. Please try again")
-
-
-
+#
+#
+#
 def main():
     host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")

@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+from helper import *
+import sys
+import os
+
+def main():
+    if len(sys.argv) != 2:
+        print("Invalid input")
+        return
+    command = "sudo python3 http_crawler.py " + sys.argv[1]
+    os.system(command)
+
+main()
