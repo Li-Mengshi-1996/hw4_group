@@ -303,7 +303,7 @@ def main():
     # print(header)
 
     # content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
-    print(content)
+    print(content[1:3000])
 
     t.close()
 
