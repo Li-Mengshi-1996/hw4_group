@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CS 4700/5700 Fundamentals of Computer Networking: David Choffnes, Ph.D.</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Homepage for David Choffnes, Ph.D., Associate Professor in Computer Science, Executive Director of the Cybersecurity and Privacy Institute at Northeastern University">
+<meta name="author" content="">
+<!--script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2830907-1']);
+  _gaq.push(['_setDomainName', 'choffnes.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script-->
+
+
+
+<!-- Le styles -->
+<link href="https://david.choffnes.com/bootstrap/css/bootstrap.css" rel="stylesheet">
+<style>
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	padding-bottom: 60px;
+}
+
+/* Custom container */
+.navbar {
+margin: 0 auto;
+    max-width: 800px;
+}
+.container-narrow {
+margin: 0 auto;
+    max-width: 800px;
+}
+.container-narrow > hr {
+margin: 30px 0;
+}
+.navbar-footer-grey {
+margin: 0 auto;
+    max-width: 800px;
+	text-align: center;
+}
+.navbar .btn-navbar {
+	float: left;
+}
+.nav-red {
+color: red;
+}
+.floatrightconf{
+float:right;
+position: relative;
+right: -120px;
+margin-left:-100px;
+color:#6633CC;
+}
+.pub {
+  width: 675px;
+}
+.pub > li {
+  width: 650px;
+}
+</style>
+<link href="https://david.choffnes.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="https://david.choffnes.com/bootstrap/js/html5shiv.js"></script>
+<![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://david.choffnes.com/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://david.choffnes.com/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://david.choffnes.com/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="bootstrap/ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="https://david.choffnes.com/bootstrap/ico/favicon.png">
+</head>
+
+<body data-spy="scroll" data-target=".classnavbar">
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+        
+<div class="navbar-inner">
+<div class="container-fluid">
+<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+<center><span>MENU &nbsp;</span><div style="display: inline-block">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span></div></center>
+</button>
+<div class="nav-collapse collapse">
+<ul class="nav">
+<li ><a class="brand" href="https://david.choffnes.com/">David Choffnes</a></li>
+
+
+
+<li class="dropdown ">
+<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">RESEARCH<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+<li role="presentation"><a id="item1" role="menuitem" tabindex="-1" href="https://david.choffnes.com/projects.php">Projects</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/pubs.php">Publications</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/vision.php">Vision</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/collaborators.php">Collaborators</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/software.php">Software</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/support.php">Support</a></li>
+</ul>
+</li>
+
+<li class="dropdown ">
+<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">TEACHING<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/classes/cs4700sp22/">Current (CS 4700/5700 Spring 22)</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/teaching.php#past">Past</a></li>
+</ul>
+</li>
+
+<li class="dropdown ">
+<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">ABOUT<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/about.php">Brief</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/about.php#cv">CV</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/rec.php">Extracurricular</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/news.php">News</a></li>
+</ul>
+
+</li>
+
+<li ><a href="press.php">PRESS</a></li>
+
+<li class="dropdown ">
+<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><span style="color:red">JOIN</span><b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/join.php#grad">Graduate</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" href="https://david.choffnes.com/join.php#ugrad">Undergraduate</a></li>
+</ul>
+</li>
+
+<li ><a href="contact.php">CONTACT</a></li>
+
+</ul>
+</div><!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+
+
+<div class="container-narrow">
+
+<div class="navbar navbar-fixed-bottom navbar-inverse classnavbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#"> &nbsp; CS 4700 / CS 5700</a>
+    <ul class="nav">
+      <li><a href="#general_info">General Info</a></li>
+      <li><a href="#course_desc">Course Description</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#projects">Projects</a></li>
+        <li><a href="#grading">Grading</a></li>
+    </ul>
+  </div>
+</div>
+<h2>CS 4700 / CS 5700 - Network Fundamentals</h2>
+<div id="general_info"></div>
+    
+<div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4><i class="icon-warning-sign"></i>Important!</h4>
+  <!--This is a preliminary schedule, subject to change. This is particularly true of the readings.<br-->
+  Also note that portions of the class may be taught online due to outbreaks of COVID-19. 
+</div>
+    
+<h3>General Information</h3>
+<p>
+<table class="table table-hover table-condensed" style="width: 600px">
+<tr><td class="right"><b>Professor:</b></td><td>David Choffnes</td></tr>
+<tr><td class="right"><b>Room:</b></td><td>Kariotis Hall 011</td></tr>
+<tr><td class="right"><b>Time:</b></td><td>Monday, Thursday 11:45am - 1:25am</td></tr>
+<tr><td class="right"><b>Professor Office Hours:</b></td><td>Tuesdays 9-10am <br> Location: Zoom</td></tr>
+<tr><td class="right"><b>Teaching Assistants:</b></td><td>
+  Joe Burns <br>
+  Nitin Mutukula <br>
+  Talha Paracha 
+</td></tr>
+<tr><td class="right"><b>TA Email:</b></td><td>cs5700sp22-staff@ccs.neu.edu</td></tr>
+<tr><td class="right"><b>TA Office Hours:</b></td><td>Joe Burns: Tuesday/Friday from 1-2pm <br> 
+Nitin Mutukula:  Monday, Wednesday from 3PM-4PM <br>
+Talha Paracha: Wednesday 4-5pm</td></tr>
+<tr><td class="right"><b>Class Forum:</b></td><td>Piazza, via Canvas</td></tr>
+<tr><td class="right"><b>Paper List:</b></td><td><a href="networkpapers.php">Click here</a></td></tr>
+</table>
+</p>
+
+<div id="course_desc"></div>
+<h3>Course Description</h3>
+<p>
+Computer networking is a rapidly advancing field, and the Internet is already an integral part of
+society. It is therefore important for computer scientists and computer engineers to be familiar
+with the fundamentals of computer networking. This course will focus on the architecture, algorithms,
+and protocols of the Internet. Topics include local area networking, routing, congestion control,
+network security, and applications such as peer-to-peer and content distribution networks. This
+course will be systems oriented, and students will work on hands-on projects to learn
+how to build and understand Internet applications.
+</p>
+
+<!--div id="prereq"></div>
+<h3>Prerequisites</h3>
+<p>
+The official prerequisites for this course are CS 3650 and 3700 (or equivalents). This course is systems
+oriented, so I expect you to understand the basics of computer architecture and operating systems, and to
+have experience implementing non-trivial systems-type projects. Basic knowledge of the Unix command line
+is also essential. You should know how to write code using emacs/vim, write a makefile, compile/debug code,
+check for running processes, kill runaway processes, and create compressed archives.
+</p-->
+
+<h3>Class Forum</h3>
+<p>
+The class forum is on Canvas (using Piazza).
+Why Piazza? Because they have a nice web interface, as well as iPhone and Android apps. 
+Piazza is the best place to ask questions about projects, programming, debugging issues, 
+exams, etc. To keep things organized, please tag all posts with the appropriate hashtags, e
+.g. #week1, #project3, etc. I will also use Piazza to broadcast announcements to the class. 
+<b>Unless you have a private issue, ALWAYS post to Piazza before writing me or the TAs an email.</b>  </p>
+
+<div id="schedule"></div>
+
+<h3>Lecture recording</h3>
+<p>This course, or parts of this course, may be recorded for educational purposes. 
+  These recordings will be made available only to students enrolled in the course, 
+  instructor of record, and any teaching assistants assigned to the course. </p>
+
+<!--p> If any student opts out of recording, they should mute video and I will not record them 
+  during lectures if they need to speak. Students are welcome to use or mute video 
+  according to their comfort level.</p-->
+
+<h3>Schedule, Lecture Slides, and Assigned Readings</h3>
+<p>
+<table class="table table-hover table-condensed table-bordered" >
+<thead><tr><th>Meeting Date</th><th>Slides</th><th>Tag</th><th>Textbook</th><th>Readings</th><th>Comments</th></tr></thead>
+<tr class="info_odd">
+  <td>Jan. 20</td>
+  <td><b>Welcome</b>: <!--Intro, History-->
+    <a href="slides/1_Intro.pptx">Intro</a>,
+    <a href="slides/2_History.pptx">History</a>
+  </td>
+  <td>#week1</td>
+  <td>&sect;1.1-1.5</td>
+  <td>Proj. 1 out</td>
+  <td>Sign up for Piazza via Canvas</td>
+</tr>
+    
+<tr class="info_even">
+  <td>Week of Jan. 24</td>
+  <td><b>Architecture, Moving bits and bytes</b>: <!--Architecture, Physical Layer, Data Link Layer-->
+    <a href="slides/3_Architecture.pptx">Architecture</a>,     
+    <a href="slides/4_Physical.pptx">Physical Layer</a>,
+    <a href="slides/5_Data_Link.pptx">Data Link Layer</a>
+  </td>
+  <td>#week2</td>
+  <td>&sect;2.1-2.7</td>
+  <td>Cla88, SRC84</td>
+  <td></td>
+</tr>
+    
+<tr class="info">    
+  <td>Week of Jan. 31</td>
+  <td>
+   <b>Multihopping</b>: <!--Bridging, Network Layer-->
+      <a href="slides/5_Data_Link.pptx">Data Link Layer</a>, <a href="slides/6_Bridging.pptx">Bridging</a>, 
+      <a href="slides/7_Network.pptx">Network Layer</a>
+       
+</td>
+  <td>#week3</td>
+  <td>&sect;3.1-3.5</td>
+  <td>P85</td>
+  <td>Proj. 1 due, Proj. 2 out</td>
+</tr>
+    
+<tr class="info_even">
+  <td>Week of Feb. 7</td>
+  <td> <b>Finding your way</b>: <!--Network Layer, Intradomain routing-->
+      <a href="slides/7_Network.pptx">Network Layer</a>, <a href="slides/8_Intra_Domain_Routing.pptx">Intradomain routing </a>
+      
+      <!--a href="slides/8_Intra_Domain_Routing.pptx">Intradomain routing </a><br>
+      <a href="slides/9_Inter_Domain_Routing.pptx">Interdomain routing</a-->
+    </td>
+  <td>#week4</td>
+  <td>&sect;4.1-4.3</td>
+  <td>SG04 <!--LAA+01, GM+04,<br/>SC+05--></td>
+  <td></td>
+</tr>
+
+<tr class="info">
+  <td>Week of Feb. 14</td>
+  <td>       <b>Playing Nicely:</b>      <!--Transport Layer, Congestion Control-->
+<a href="slides/10_Transport.pptx">Transport Layer, Congestion Control</a> 
+      <!--a href="slides/12_NAT.pptx">NAT</a--><!--, <a href="slides/14_QoS.pptx">QoS</a-->
+    
+    </td>
+  <td>#week5</td>
+  <td>&sect;4.1.3, 9.3.1</td>
+  <td>Jac88, MM19 (Optional: CK74)</td>
+  <td>Proj. 2 due, Proj. 3 out</td>
+</tr>
+
+
+<tr class="success">
+  <td>Feb. 21</td>
+  <td><b>President's Day</b></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>  
+
+<tr class="info_even">
+  <td>Feb. 24--Mar. 3</td>
+  <td><b>Route BGP</b>: <!--Interdomain routing--> 
+  <a href="slides/9_Inter_Domain_Routing.pptx">Interdomain routing</a> 
+
+    </td>
+  <td>#week6</td>
+  <td>&sect;2.5, 5.1, 5.2, 6.3, 6.4</td>
+  <td>CR04, LB17</td>
+  <td></td>
+</tr>
+
+    <tr class="info">
+  <td>Week of Mar. 7</td>    
+  <td>
+      <b>Glue and Duct Tape:</b> <!--DNS, NAT--> <a href="slides/11_DNS.pptx">DNS</a>, <a href="slides/12_NAT.pptx">NAT</a> 
+      
+      <!--a href="slides/13_CDNs.pptx">CDNs</a>, 
+      <a href="slides/14_IXPs.pptx">IXPs</a-->
+        
+
+      
+  <!--<a href="slides/17_P2P.pptx">P2P, Bittorrent</a><br>...and finish up Datacenter slides--></td>
+  <td>#week7</td>
+  <td>5e: &sect;9.4</td>
+  <td>LNC+19, SBK+20, KKBH+21, BCU+18</td>
+  <td>Proj. 3 due, Proj. 4 out</td>
+</tr>
+
+<!--tr class="warning">
+  <td>Mar. </td>
+  <td><b>Midterm (tentative, depending on Covid)</b></td>
+  <td>#midterm</td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>      
+      
+
+<tr class="info_odd">
+  <td>Mar. 10</td>
+  <td><a href="slides/13_CDNs.pptx">CDNs</a>, <a href="slides/14_IXPs.pptx">IXPs</a>
+  <td>#slack</td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr-->
+
+<tr class="success">
+  <td>Week of Mar. 14</td>
+  <td><b>Spring break</b></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>  
+
+<tr class="info_odd">
+  <td>Week of Mar. 21</td>
+
+  <td> <b>Flattening of the Internet:</b> <a href="slides/13_CDNs.pptx">CDNs</a>, IXPs (skipping) <br>
+    <b>Volatile and Decentralized</b>: 
+  <!--P2P, BitTorrent, Other Overlay Networks-->
+      <a href="slides/15_P2P.pptx">P2P, BitTorrent</a>
+      <!--a href="slides/16_Overlays.pptx">Other Overlay Networks</a-->
+  <td>#week8</td>
+  <td>5e: &sect;9.4</td>
+  <td>LLSB08, KN10</td>
+  <td></td>
+</tr>
+    
+<tr >
+  <td>Week of Mar. 28</td>
+  <td> <!--Other Overlay Networks--><a href="slides/16_Overlays.pptx">Other Overlay Networks</a>
+     </td>
+  <td>#week9</td>
+  <td></td>
+  <td>SMK+01, LTC+21</td>
+
+  <td></td> 
+</tr>
+    
+
+
+<tr class="info">
+  <td>Week of Apr. 4</td>
+    <td>
+        <b>(Big) Data Centers</b>: DCN architectures and protocols 
+      <!--a href="slides/17_DCN.pptx">DCN architectures and protocols</a-->
+          <!--Read <a href="slides/16_IXP_DCN.pptx">data center slides</a>, and <a href="https://echo360.bu.edu:8443/ess/echo/presentation/26051102-2a1d-4262-82c1-c9381edac526/media.m4v?downloadOnly=true">watch this talk by Mohammad Alizadeh</a>  -->
+        
+        
+    </td>
+      
+  <td>#week10</td>
+  <td>Read papers</td>
+  <td>RGAY+21, KDJ+20</td>
+  <td>Proj. 4 Due, Proj. 5 Out</td>    
+</tr>
+    
+    <tr >
+  <td>Week of Apr. 11</td>
+  <td>
+      <b>Bleeding Hearts and Tinfoil Hats</b>: TLS and Anonymity
+        <!--a href="./slides/18_TLS.pptx">TLS</a> and <a href="./slides/19_Privacy_Anonymity.pptx">Anonymity</a -->
+      
+      
+  </td>
+  <td>#week11</td>
+  <td>Read papers</td>
+  <td>MAM+21, RLD+18, SG19</td>
+  <td></td>
+</tr>
+    
+<tr class="success">
+  <td>Apr. 18</td>
+  <td><b>Patriot's Day</b></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>  
+
+<tr >
+  <td>Apr. 21</td>
+  <td>
+      <b>Mobile and Programmable:</b> Mobile Networks and SDNs
+      <!--a href="./slides/20_Mobile_SDN.pptx">Mobile Networks and SDNs</a> <br>
+      For those interested, check out this great talk about SDNs: <a href="https://www.youtube.com/watch?v=WVs7Pc99S7w">An attempt to motivate and clarify Software-Defined Networking (SDN)</a>
+        -->
+  </td>
+  <td>#week12</td>
+  <td></td>
+  <td>LPZ+21, FRZ13</td>
+  <td></td>
+</tr>
+    
+    <t
+r class="">
+  <td>Apr. 25</td>
+  <td>
+      Last lecture (or catch up)
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+    <tr class="warning">
+  <td>May 3</td>
+  <td>
+      
+  </td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>Proj. 5 due</td>
+</tr>
+
+</table>
+</p>
+
+<!--
+<tr class="info_odd">
+  <td>Apr. 15</td>
+  <td>Proj. 5 Due</td>
+</tr>
+<tr class="info_odd">
+  <td>Apr. 8</td>
+  <td><a href="slides/20_Malware_Botnets.pptx">Malware,<br/>Botnets, Spam</a></td>
+  <td>#week12</td>
+  <td>&sect8.1-8.6</td>
+  <td>SEV+04, FPPS+07,<br/>KKLE+08, SCCG+09</td>
+  <td></td>
+</tr>
+-->
+
+<h3>Textbook</h3>
+<p>
+I do not require students to get textbooks; everything you need to know for this course can be found in the slides or online. 
+However, a textbook may be useful if you are not totally comfortable with network fundamentals, or if you just want to have a handy reference book. 
+That said, the course will be based on the following textbook:
+</p>
+
+<ul>
+  <li>Computer Networks: A Systems Approach (Peterson and Davie, 5th Edition).</li>
+  <i>Computer Networks <b>5th</b> edition by Peterson & Davie is available on Safari Books Online by O’Reilly, which students can <a href="https://subjectguides.lib.neu.edu/compsci">access for free through the library</a>.
+ The most recent version of this book is also <a href="https://book.systemsapproach.org/index.html">available online</a>. </i>
+</ul>
+
+<ul>
+You may find these supplimentary texts useful as resources:
+<li><a href="http://www.awlonline.com/kurose-ross">Computer Networking: A Top-Down Approach Featuring the Internet</a> by Jim Kurose and Keith Ross, Addison-Wesley.
+<li><a href="http://www.amazon.com/Distributed-Systems-Concepts-Design-5th/dp/0132143011/">Distributed Systems: Concepts and Design (Coulouris etal., 5th Edition) </a>
+<li><a href="http://cs.ecs.baylor.edu/~donahoo/practical/CSockets/">TCP/IP Sockets in C</a> by Jeff Donahoo and Ken Calvert, Morgan Kaufmann. <br>
+ <i>This book is available on Safari Books Online by O’Reilly, which students can <a href="https://subjectguides.lib.neu.edu/compsci">access for free through the library</a>.</i>
+</ul>
+
+
+<h3>Reading and Participation</h3>
+<p>
+As previously mentioned, a large component of this course will be reading important papers from
+the networking research community. Some of these papers are classics: older, but intrumental in
+guiding the design of today's networks. Other papers will be more contemporary, and focus on 
+improving existing networks, or even replacing them entirely. All the papers can be found
+<a href="networkpapers.php">here</a>.
+</p><p>
+One or more papers will be assigned as reading each week. For the second week onward, we will post a 
+poll each Monday for students to vote on the paper for the following week. You will have 24 hours to complete 
+this poll, after which the paper will be chosen based on majority vote. By Thursday, we will post an 
+exercise to complete based on the selected paper. The exercise will be due on the following Thursday at 9am. 
+</p><p>
+During class, students will form groups of two to respond to an in-class prompt about the paper. 
+A random set of students will be picked to present their answers. Thus, although
+attendance in lectures is not required, if you get called and you are not present (or you haven't
+read the paper), then you are busted. 
+</p><p>
+5% of your final grade will be based on participation. If you complete exercises and are 
+in class to respond when I call your name, you will get full points.
+<div id="projects"></div>
+</p>
+
+<h3>Projects</h3>
+<p>
+There will be five programming projects throughout the semester (three for undergraduates). <b>Programming projects are due at
+11:59:59pm on the specified date.</b> We will use a turn-in script to create a compressed archive
+of the project files, timestamp them, and submit them for grading. These projects
+require significant design and coding, hence students are recommended to start early!
+</p>
+<p>
+<table class="table table-hover table-bordered" style="width: 600px">
+<tr class="info_hdr"><th>Assignment</th><th>Description</th><th>Due Date</th><th>Tag</th></tr>
+<tr class="info_odd"><td><a href="project1.php">Project 1 (Grad only)</a></td><td><a href="project1.php">Socket Basics</a></td><td>Feb 1</td><td>#project1</td></tr>
+<tr class="info_even"><td><a href="project2.php">Project 2 (Grad only)</a></td><td><a href="project2.php">Web Crawler</a></td><td>Feb 15</td><td>#project2</td></tr>
+<tr class="info_odd"><td><a href="project3.php">Project 3</a></td><td><a href="project3.php">TCP Simulation in NS-2</a></td><td>Mar 8 (MS) <br> Feb 22 (UG) </td><td>#project3</td></tr>
+<tr class="info_even"><td><a href="project4.php">Project 4</a></td><td><a href="project4.php">Raw Sockets</a></td><td>Apr 5 (MS and UG) </td><td>#project4</td></tr>
+≈<tr class="info_odd"><td>Project 5</td><td>Roll Your Own CDN</td><td>May 3 (Grad and UG)</td><td>#project5</td></tr>
+
+<!--
+<tr class="info_hdr"><th>Assignment</th><th>Description</th><th>Due Date</th><th>Tag</th></tr>
+<tr class="info_odd"><td>Project 1 (Grad only)</td><td>Socket Basics</td><td>Feb 1</td><td>#project1</td></tr>
+<tr class="info_even"><td>Project 2 (Grad only)</td><td>Web Crawler</td><td>Feb 15</td><td>#project2</td></tr>
+<tr class="info_odd"><td>Project 3</td><td>TCP Simulation in NS-2</td><td>Mar 8 (Grad) <br> Feb 22 (UG) </td><td>#project3</td></tr>
+<tr class="info_even"><td><a href="project4.php">Project 4</a></td><td><a href="project4.php">Raw Sockets</a></td><td>Apr 5 (MS and UG) </td><td>#project4</td></tr>
+<tr class="info_even"><td><a href="project4.php">Project 4</a></td><td><a href="project4.php">Raw Sockets</a></td><td>Apr 5 (MS and UG) </td><td>#project4</td></tr>
+<tr class="info_odd"><td><a href="project5.php">Project 5</a></td><td><a href="project5.php">Roll Your Own CDN</a></td><td>May 3 (MS and UG)</td><td>#project5</td></tr>
+-->
+
+</table> 
+</p>
+<p>
+You will form groups of two people (possibly three, if necessary) to do the projects.
+I will allow you to form your own groups; if you are having trouble finding a partner, post a notice
+to Piazza. As you are free to choose your partner(s), I will not be sympathetic to complaints at the
+end of the semester about how your group-mates did not do any work. All group members should be involved
+in all major design decisions, and groups should develop a programming plan that can be effectively
+parallelized. You may switch groups between programming projects.
+</p>
+<p>
+<b>Groups must be comprised of either only students enrolled in 4700 or only students enrolled in 5700</b>
+</p>
+
+<p>Most projects can be programmed in a language of your choice. 
+  <b>The only universal requirement is that your projects MUST compile and run on an unmodified Khoury College Linux machine.</b>
+  Notice the emphasis on unmodified: if you're relying on libraries or tools that are only available in your home directory, then we will not be able 
+  to run your code and <b>you will fail the assignment</b>. You are welcome to develop and test code on your home machines, but in the end 
+  everything needs to work on the Khoury College Linux machines. If you have any questions about the use of particular languages or libraries, post them to Piazza.
+</p>
+
+<p>
+  <div class="alert alert-block">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <i class="icon-warning-sign"></i><b>Important note:</b> If you refered or obtained a key idea from a book, person or any online source, 
+then the source of the idea (it can be code as well) must be cited. 
+I am not against looking up additional sources to complete the projects but I will not tolerate academic dishonesty. 
+If I think some part of the project has been blindly copied without understanding, I reserve the right to cross-examine the submitted project. 
+For more details, see the Academic Integrity section below.</div>
+</p>
+
+<h3>Exams</h3>
+Due to the uncertaintly around the ability for the entire class to take a synchronous in-person exam, 
+this semester will not have a midterm or a final.
+
+<!--p>
+There will be one midterm and one final. All exams will be closed book and closed notes, and
+computers are not allowed nor is any access to the Internet via any device. The exams will cover
+material from lectures, readings, and the projects. The final <i>will be cumulative</i>,
+so review everything!</p>
+<div class="alert alert-block">
+     <h4><i class="icon-warning-sign"></i>Important!</h4>
+    
+<p>  When answering exam questions, you <b>cannot</b> reproduce a figure from lecture slides or other 
+sources in textbooks or the Web. Doing so is <i>plagiarism</i>. Even when answering exam questions 
+your work must be your own. <b>Answers violating this rule will be given an automatic zero.</b> If 
+any group of students have the exact same answer to a question, it will be treated as if you 
+copied from each other during the exam. 
+</p>
+    </div>
+<p>I do not want to discourage studying for exams in groups. However, regurgitation of facts without 
+being able to use your own words shows that you don't truly understand the material. </p>
+<p><b>If you do not know the answer to an exam question and leave it blank, you will automatically 
+receive 10% of the points for the question. If you answer a question incorrectly, you get zero points.</b></p-->
+
+<div id="grading"></div>
+<h3>Grading</h3>
+<p>
+<table class="table table-bordered" style="width: 400px">
+<tr><td class="right"><b>Projects:</b></td><td>8%, 12%, 16%, 24%, 35% (Grad)<br>20%, 30%, 45% (UG)</td></tr>
+<tr><td class="right"><b>Participation:</b></td><td>5%</td></tr>
+</table>
+</p><p>
+Each project will include a breakdown of how it will be graded. Some projects may include extra credit
+components that can boost your grade above the maximum score :)
+</p><p>
+To calculate final grades, I simply sum up the points obtained by each student (the points will sum up
+to some number <i>x</i> out of 100) and then use the following scale to determine the letter grade:
+
+<ul>
+  <li> <b>4700</b>: [0-60] F, [60-62] D-, [63-66] D, [67-69] D+, [70-72] C-, [73-76] C, [77-79] C+, [80-82] B-, [83-86] B,
+[87-89] B+, [90-92] A-, [93-100] A. 
+ <li> <b>5700</b>: [0-69] F, [70-72] C-, [73-76] C, [77-79] C+, [80-82] B-, [83-86] B,
+[87-89] B+, [90-92] A-, [93-100] A. 
+</ul>
+<b>I do not curve the grades in any way</b>.
+</p>
+
+<h3>Regrading and Challenges</h3>
+<p>
+In this class, we will use the <a href="http://entertainment.howstuffworks.com/nfl-review-rules2.htm">
+Coaches Challenge</a> to handle requests for regrading. Each student is allotted two (2)
+<i>challenges</i> each semester. If you want a homework, project, or a test to be regraded,
+you must visit <b>during office hours</b> with a <i>challenge</i> <b>in writing</b> specifying (a) the
+problem or problems you want to be regraded, and (b) for each of these problems, why you think
+the problem was misgraded. If it turns out that there has been an error in grading, the grade will
+be corrected, and you get to keep your <i>challenge</i>. However, if the original grade was correct,
+then you permanently lose your <i>challenge</i>. Once your two <i>challenges</i> are exhausted,
+you will not be able to request regrades.
+</p><p>
+Note that, in the case of projects, all group members must have an available <i>challenge</i> in order
+to contest a grade. If the <i>challenge</i> is successful, then all group members get to keep
+their <i>challenge</i>. However, if the <i>challenge</i> is unsuccessful, then all group members
+permamently lose one <i>challenge</i>. 
+</p><p>
+Any requests for grade changes must be made within seven days of when the work was
+returned. 
+</p>
+<p><b>You may not challenge the use of slip days, or any points lost due to lateness.</b></p>
+
+<h3>Late Policy</h3>
+<p>
+For programming projects, we will use flexible slip dates. Each student is given four slip days
+for the semester. You may use the slip days on any project during the semester in increments of
+one day. For example, you can hand in one project four days late, or one project two days late and
+two projects one day late. The slip time will be deducted from <i>each group member's remaining slip time</i>.
+Keep this stipulation in mind: if one member of a group has zero slip days remaining,
+then that means the whole group has zero slip days remaining.
+</p><p>
+After you have used up your slip time, any project handed in late will be marked off using
+the following formula:
+</p><p>
+Original_Grade * (1 - ceiling(Seconds_Late / 86400) * 0.2) = Late_Grade
+</p><p>
+In other words, every day late is 20% off your grade. Being 1 second late is exactly equivalent to being 23
+hours and 59 minutes late. My late policy is extremely generous, and therefore I will not be sympathetic to
+excuses for lateness. <b>Late penalties cannot be challenged.</b>
+</p>
+
+<h3>Cheating Policy</h3>
+<p>
+Projects must be <i>entirely</i> the work of
+the students turning them in, i.e. you and your group members. Copying code from other students
+(past or present) or websites is strictly prohibited. If you have any questions about using
+a particular resource, ask the course staff or post a question to the class forum.
+</p><p>
+All students are subject to the Northeastern University <a href="http://www.northeastern.edu/osccr/academichonesty.html">
+Academic Integrity Policy</a>. All cases of suspected plagiarism or other academic dishonesty
+will be referred to the Office of Student Conduct and Conflict Resolution (OSCCR).
+</p>
+
+<p>
+Consequences of Violating Academic Integrity Policy
+    <ol>
+<li>All students who are caught cheating will be referred to the Office of Student Conduct and Conflict Resolution (OSCCR). Students who have been referred to OSCCR will be given the opportunity to accept responsibility for their infraction or to request a hearing before a student conduct board. If a student accepts responsibility for a minimum sanction of deferred suspension will follow. A second violation will meet with expulsion from the University.
+<li>All students who are caught cheating will receive a <b>-100%</b> for the item on which cheating occurred. Cheating is worse than not turning in the item.
+</ol></p>
+
+<p>Someone may already have written a program that does part of what you'll need to do for your assignments. For your assignments, however, you are expected to write all of the source code yourself, without copying source code from any other program, even if there are programs out there that would allow you to copy their source code. You also should not post your work for others to obtain.</p>
+
+<p>You may discuss problems with other students, but you should not share or show code to anyone other than your assigned partner.</p>
+
+<p>You are responsible for keeping your code hidden from all other students. If you keep your local repository on our CCS servers, make sure that it is protected 600. Leaving it group- or world- readable means that anyone can steal your work. Your home directory includes, by default, a directory called classes that is readable only by you. Put all your class work here. If you put class material in some unprotected directory, and somebody else copies it, you will be held responsible.
+</p>
+
+
+<h3>Classroom Environment</h3>
+<p>To create and preserve a classroom atmosphere that optimizes teaching and learning, all participants share a responsibility in creating a civil 
+  and non-disruptive forum for the discussion of ideas. Students are expected to conduct themselves at all times in a manner that does not disrupt teaching or 
+  learning. Your comments to others should be constructive and free from harassing statements. You are encouraged to disagree with other students and the 
+  instructor, but such disagreements need to respectful and be based upon facts and documentation (rather than prejudices and personalities). The instructor 
+  reserves the right to interrupt conversations that deviate from these expectations. Repeated unprofessional or disrespectful conduct may result in 
+  a lower grade or more severe consequences. Part of the learning process in this course is respectful engagement of ideas with others.</p>
+
+
+<h4>Title IX</h4>
+<p><i>Title IX of the Education Amendments of 1972 protects individuals from sex or gender-based discrimination, including discrimination based on 
+  gender-identity, in educational programs and activities that receive federal financial assistance.</i></p>
+  <p>
+	  Northeastern’s Title IX Policy prohibits Prohibited Offenses, which are defined as sexual harassment, sexual assault, relationship or domestic violence, and stalking.
+	  The Title IX Policy applies to the entire community, including male, female, transgender students, faculty and staff.
+	</p>
+
+	<p>
+	  If you or someone you know has been a survivor of a Prohibited Offense, <span style="font-style: italic; text-decoration: underline">confidential</span> support and guidance can be found through <strong>University Health and Counseling Services</strong> staff (<a href="http://www.northeastern.edu/uhcs/" target="_blank">http://www.northeastern.edu/uhcs/</a>) and the <strong>Center for Spiritual Dialogue and Service</strong> clergy members (<a href="http://www.northeastern.edu/spirituallife/" target="_blank">http://www.northeastern.edu/spirituallife/</a>).
+	  By law, those employees are not required to report allegations of sex or gender-based discrimination to the University.
+	</p>
+
+	<p>
+	  Alleged violations can be reported non-confidentially to the Title IX Coordinator within <strong>The Office for Gender Equity and Compliance</strong> at: <a href="mailto:titleix@northeastern.edu">titleix@northeastern.edu</a> and/or through <strong>NUPD</strong> (Emergency 617.373.3333; Non-Emergency 617.373.2121).
+	  Reporting Prohibited Offenses to NUPD does <strong>NOT</strong> commit the victim/affected party to future legal action.
+	</p>
+
+	<p>
+	  <span style="text-decoration: underline">Faculty members are considered "responsible employees"</span> at Northeastern University, meaning they are required to report all allegations of sex or gender-based discrimination to the Title IX Coordinator.
+	</p>
+
+	<p>
+	  In case of an emergency, please call 911.
+	</p>
+
+	<p>
+	  <strong>Please visit <a href="http://www.northeastern.edu/titleix" target="_blank">http://www.northeastern.edu/titleix</a> for a complete list of reporting options and resources both on- and off-campus.</strong>
+	</p>
+
+	<h4>Students with Disabilities</h4>
+	<p>
+	  Students  who wish to receive academic services and/or accommodations should visit the <a href="http://www.northeastern.edu/drc" target="_blank">Disability Resource Center</a> at 20 Dodge Hall or call (617) 373-2675.
+	  If you have already done so, please provide your letter from the DRC to me early in the semester so that I can arrange those accommodations.
+	</p>
+      
+
+<!--h3>Support for this class</h3>
+<p>The CDN project for this class is supported by an AWS in Education Grant award. Many thanks to Amazon for this!</p-->
+
+<h3>COVID-19 Precautions</h3>
+<p>All students are expected to follow university, city, state, and federal guidelines regarding COVID-19. Students who 
+  do not follow the protocols will be asked to leave the classroom.</p> 
+
+</article>
+
+
+</div><!-- End of Content -->
+
+<script type="text/javascript">
+    $('#classnavbar').scrollspy()
+</script>
+
+    
+    
+    </div> <!-- /container -->
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://david.choffnes.com/jquery-latest.js"></script>
+    <script src="https://david.choffnes.com/bootstrap/js/bootstrap.js"></script>
+
+ <script>
+      !function ($) {
+        $(function(){
+          // Fix for dropdowns on mobile devices
+          $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { 
+              e.stopPropagation(); 
+          });
+          $(document).on('click','.dropdown-menu a',function(){
+              document.location = $(this).attr('href');
+          });
+        })
+      }(window.jQuery)
+    </script>
+
+    <!--script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-2830907-1";
+    urchinTracker();
+    </script-->
+    </body>
+    <div class="navbar-footer-grey">
+    <hr>
+    <p>David Choffnes, Associate Professor, Khoury College of Computer Sciences, Northeastern University. &copy; 2021<br>
+    Last updated
+    <!-- #BeginDate format:Am1 -->March 28, 2022<!-- #EndDate -->.
+    </p>
+    </div>
+    </html>
