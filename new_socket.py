@@ -166,7 +166,7 @@ class RawSocket:
             self.cwnd = 1
             print("Time Out.")
             return None
-        psh = create_psh(self.destination_ip, self.source_ip, socket.IPPROTO_TCP, len(tcp_data))
+        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
 
         print("check: " + str(check_sum(psh + tcp_data)))
 

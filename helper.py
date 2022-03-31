@@ -15,6 +15,13 @@ def get_source_address():
     # print(address)
     return address
 
+def get_pseudo_ip_header(source_ip, dest_ip, tcp_length):
+    source_address = socket.inet_aton(source_ip)
+    dest_address = socket.inet_aton(dest_ip)
+    protocol = socket.IPPROTO_TCP
+    pseudo_ip_header = pack('!4s4sHH', source_address,
+                            dest_address, protocol, tcp_length)
+    return pseudo_ip_header
 
 def create_psh(source_ip, destination_ip, protocol, tcp_length):
     source_address = socket.inet_aton(source_ip)
