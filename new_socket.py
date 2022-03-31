@@ -298,11 +298,20 @@ def main():
     t.send(request)
     content = t.receive()
 
+    if not content.startswith(b"HTTP/1.1 200 OK"):
+        print("Non-200 status code")
+        sys.exit()
+
     # header = content.split(b"/r/n")[0]
     # print("content header:")
     # print(header)
+    content = re.sub(rb'4000\r\n', b"", content)
 
-    # content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
+    content = re.sub(rb'\r\n[0-9]\d*\r\n', b"", content)
+
+    parse = content.find(b"\r\n\r\n")
+    content = content[parse + len(b"\r\n\r\n"):]
+
     print(content[1:3000])
 
     t.close()
