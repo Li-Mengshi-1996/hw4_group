@@ -258,6 +258,27 @@ class RawSocket:
         self.recv_dict.clear()
         return result
 
+    def teardown(self):
+        self._send("",get_tcp_flags(fin=1, ack=1))
+        tcp_data = self._recv()
+        if tcp_data is None or tcp_data.flags & get_tcp_flags(ack=1) == 0:
+            print("Teardown fails.")
+            return False
+        self.tcp_seq = tcp_data.ack_no
+        self.tcp_ack = tcp_data.seq_no + 1
+        if tcp_data.flags & get_tcp_flags(fin=1):
+            self._send("", get_tcp_flags(ack=1))
+
+        return True
+
+    def close(self):
+        if self.teardown():
+            self.recv_socket.close()
+            self.send_socket.close()
+        else:
+            print("Teardown fails. Please try again")
+
+
 
 def main():
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
@@ -272,6 +293,8 @@ def main():
 
     t.send(request)
     content = t.receive()
+
+    t.close()
 
     # with open(file_name, 'wb') as file:
     #     file.write(content)
