@@ -183,6 +183,10 @@ class RawSocket:
             tcp_data = self._recv()
             if tcp_data is None:
                 sys.exit(1)
+
+            print("Sum: ")
+            print(tcp_data.tcp_flags + len(tcp_data.payload))
+
             if tcp_data.tcp_flags & get_tcp_flags(fin=1):
                 self.tcp_seq = tcp_data.tcp_ack_seq
                 self.tcp_ack = tcp_data.tcp_seq + 1
@@ -239,8 +243,8 @@ class RawSocket:
 
 
 def main():
-    #host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
     t = RawSocket()
@@ -252,41 +256,9 @@ def main():
     t.send(request)
     content = t.receive()
 
-    with open(file_name, 'wb') as file:
-        file.write(content)
-
-    # print("request")
-    # print(len(request))
-    #
-    # print("local ip: " + t.source_ip)
-    # print("local port: " + str(t.source_port))
-    #
-    # print("remote ip: " + t.destination_ip)
-    # print("remote port: " + str(t.destination_port))
-
-    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
-    # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
-    # request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
-    # s = socket.socket()
-    # s.connect((host, 80))
-    # s.send(request.encode())
-    #
-    # content = s.recv(65536)
-    #
-    # content = ""
-    # while True:
-    #     content += s.recv(65536).decode()
-    #
-    #     if content.find("/html>") != -1:
-    #         break
-    #
     # with open(file_name, 'wb') as file:
     #     file.write(content)
 
-
-#     file.write(content)
-
-# print(s.recv(1024))
 
 
 main()
