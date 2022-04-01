@@ -15,13 +15,6 @@ def get_source_address():
     # print(address)
     return address
 
-def get_pseudo_ip_header(source_ip, dest_ip, tcp_length):
-    source_address = socket.inet_aton(source_ip)
-    dest_address = socket.inet_aton(dest_ip)
-    protocol = socket.IPPROTO_TCP
-    pseudo_ip_header = pack('!4s4sHH', source_address,
-                            dest_address, protocol, tcp_length)
-    return pseudo_ip_header
 
 def create_psh(source_ip, destination_ip, protocol, tcp_length):
     source_address = socket.inet_aton(source_ip)
@@ -66,20 +59,6 @@ def split_data_to_send(data, segment_size, tcp_seq):
     return result
 
 
-def calculate_checksum(packet):
-    cks = 0
-    if len(packet) % 2 != 0:
-        packet += b'\0'
-    for i in range(0, len(packet), 2):
-        w = (packet[i] << 8) + (packet[i+1])
-        cks += w
-
-    cks = (cks >> 16) + (cks & 0xffff)
-    cks = ~cks & 0xffff
-
-    return cks
-
-
 def parse_url(url):
     url = url.replace("http://", "")
     url = url.replace("https://", "")
@@ -99,23 +78,24 @@ def parse_url(url):
 
     return host, file, path
 
-def parse_response(response):
-    status_line, response = response.split(b'\r\n', 1)
-    status_line = status_line.decode('ascii')
-    version, code, reason_phrase = status_line.split(" ", 2)
-    headers, content = response.split(b'\r\n\r\n', 1)
-    headers = headers.decode('ascii')
-    cookies = dict()
-    parsed_headers = dict()
-    for h in headers.split('\r\n'):
-        key, value = h.split(': ', 1)
-        if key == 'Set-Cookie':
-            c = value.split("; ", 1)[0]
-            cookie_key, cookie_value = c.split("=", 1)
-            cookies[cookie_key] = cookie_value
-        else:
-            parsed_headers[key] = value
-    return code, reason_phrase, content, cookies, parsed_headers
+
+def check_tcp(data, source_ip, destination_ip):
+    tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window, tcp_check, tcp_urg_ptr \
+        = unpack('!HHLLBBHHH', data[:20])
+    tcp_doff = tcp_offset_res >> 4
+
+    payload = data[tcp_doff * 4:]
+
+    saddr = socket.inet_aton(source_ip)
+    daddr = socket.inet_aton(destination_ip)
+
+    total_length = tcp_doff * 4 + len(payload)
+
+    psh = pack('!4s4sBBH', saddr, daddr, 0, socket.IPPROTO_TCP, total_length)
+
+    temp = psh + data[:16] + pack('H', 0) + data[18:]
+    print("origin check: " + str(tcp_check))
+    print("we check: " + str(check_sum(temp)))
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))

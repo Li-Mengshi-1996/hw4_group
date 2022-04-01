@@ -168,7 +168,8 @@ class RawSocket:
             self.cwnd = 1
             print("Time Out.")
             return None
-        psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
+        # psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
+        check_tcp(tcp_data,self.destination_ip, self.source_ip)
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
@@ -278,14 +279,14 @@ class RawSocket:
             self.recv_socket.close()
             self.send_socket.close()
         else:
-            print("Teardown fails. Please try again")
+            print("Teardown fails. Please try again.")
 
 
 #
 #
 #
 def main():
-    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project2.php")
+    host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
     # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
