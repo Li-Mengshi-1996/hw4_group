@@ -95,36 +95,74 @@ def checksum(s):
 
 
 def check_tcp(data, source_ip, destination_ip):
-    tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window, tcp_check, tcp_urg_ptr \
-        = unpack('!HHLLBBHHH', data[:20])
-    tcp_doff = tcp_offset_res >> 4
+    [src_port, dest_port, seq_num, ack_num, offset_res, tcp_flags, window] = unpack('!HHLLBBH', data[0:16])
+    [checksum] = unpack('H', data[16:18])
+    [urg_ptr] = unpack('!H', data[18:20])
 
-    payload = data[20:]
+    len_header = offset_res >> 4
+    # self.fin = tcp_flags & 0x01
+    # self.syn = (tcp_flags & 0x02) >> 1
+    # self.rst = (tcp_flags & 0x04) >> 2
+    # self.psh = (tcp_flags & 0x08) >> 3
+    # self.ack = (tcp_flags & 0x16) >> 4
+    # self.urg = (tcp_flags & 0x32) >> 5
+    payload = data[len_header * 4:]
+    # do the checksum
+    # 1. set the pesudo header
+    src_ip = socket.inet_aton(source_ip)
+    dest_ip = socket.inet_aton(destination_ip)
+    placeholder = 0
+    protocol = socket.IPPROTO_TCP
+    # tcp_length should be the length inside the header * 4 and plust the length of the data
+    tcp_length = len_header * 4 + len(payload)
 
-    saddr = socket.inet_aton(source_ip)
-    daddr = socket.inet_aton(destination_ip)
+    pesudo_header = pack('!4s4sBBH', src_ip, dest_ip, placeholder, protocol, tcp_length)
+    tcp_header_and_data = data[:16] + pack('H', 0) + data[18:]
+    temp = pesudo_header + tcp_header_and_data
+    new_checksum = checksum(temp)
 
-    # total_length = tcp_doff * 4 + len(payload)
+    print("check")
+    print(checksum == new_checksum)
+
+
+
+
+
+
+
+
+
+
+    # tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window, tcp_check, tcp_urg_ptr \
+    #     = unpack('!HHLLBBHHH', data[:20])
+    # tcp_doff = tcp_offset_res >> 4
     #
-    # psh = pack('!4s4sBBH', saddr, daddr, 0, socket.IPPROTO_TCP, total_length)
+    # payload = data[20:]
     #
-    # psh = psh + data[:16] + pack('H', 0) + data[18:]
-
-    tcp_header = pack('!HHLLBBHHH', tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res,
-                      tcp_flags, tcp_window, 0, tcp_urg_ptr)
-
-    tcp_length = len(tcp_header) + len(payload)
-
-    psh = create_psh(source_ip, destination_ip, socket.IPPROTO_TCP, tcp_length)
-    psh = psh + tcp_header + payload
-
-    we_check = check_sum(psh)
-
-
-
-    print("check:")
-
-    print(tcp_check & we_check)
+    # saddr = socket.inet_aton(source_ip)
+    # daddr = socket.inet_aton(destination_ip)
+    #
+    # # total_length = tcp_doff * 4 + len(payload)
+    # #
+    # # psh = pack('!4s4sBBH', saddr, daddr, 0, socket.IPPROTO_TCP, total_length)
+    # #
+    # # psh = psh + data[:16] + pack('H', 0) + data[18:]
+    #
+    # tcp_header = pack('!HHLLBBHHH', tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res,
+    #                   tcp_flags, tcp_window, 0, tcp_urg_ptr)
+    #
+    # tcp_length = len(tcp_header) + len(payload)
+    #
+    # psh = create_psh(source_ip, destination_ip, socket.IPPROTO_TCP, tcp_length)
+    # psh = psh + tcp_header + payload
+    #
+    # we_check = check_sum(psh)
+    #
+    #
+    #
+    # print("check:")
+    #
+    # print(tcp_check & we_check)
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))
