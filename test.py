@@ -19,7 +19,7 @@ import socket
 # print(a)
 
 # iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP
-# sudo ethtool -K ens33 tx off rx off
+# sudo ethtool -K ens33 tx off rx off gro off
 
 # a6020a2bd05e9217f52bc1568cc28077
 # a6020a2bd05e9217f52bc1568cc28077
