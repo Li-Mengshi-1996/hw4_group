@@ -41,23 +41,23 @@ def check_sum(msg):
     return s
 
 
-def split_data_to_send(data, segment_size, tcp_seq):
-    start = 0
-    temp = []
-    result = []
-    current_seq = tcp_seq
-
-    while start < len(data):
-        end = min(start + segment_size, len(data))
-        temp.append(data[start:end])
-        start = end
-
-    for data_piece in temp:
-        result.append((current_seq, data_piece))
-        current_seq += len(data_piece)
-
-    print(result)
-    return result
+# def split_data_to_send(data, segment_size, tcp_seq):
+#     start = 0
+#     temp = []
+#     result = []
+#     current_seq = tcp_seq
+#
+#     while start < len(data):
+#         end = min(start + segment_size, len(data))
+#         temp.append(data[start:end])
+#         start = end
+#
+#     for data_piece in temp:
+#         result.append((current_seq, data_piece))
+#         current_seq += len(data_piece)
+#
+#     print(result)
+#     return result
 
 
 def parse_url(url):

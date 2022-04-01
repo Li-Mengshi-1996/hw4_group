@@ -65,7 +65,7 @@ class RawSocket:
 
     def send(self, data):
         flag = get_tcp_flags(psh=1, ack=1)
-        data_pieces = split_data_to_send(data, self.segment_size, self.tcp_seq)
+        # data_pieces = split_data_to_send(data, self.segment_size, self.tcp_seq)
 
         # p = data.encode()
         # tcp_data = TCPHeader(self.source_port, self.destination_port, 1, self.tcp_ack, flag, payload=p)
