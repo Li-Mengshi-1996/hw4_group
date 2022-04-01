@@ -196,6 +196,7 @@ class RawSocket:
 
             if tcp_data.tcp_flags == -1:
                 self._send("", get_tcp_flags(ack=1))
+                print("retry")
                 continue
 
             # tcp_offset_res = (tcp_data.tcp_doff << 4) + 0
