@@ -308,7 +308,8 @@ def main():
     left = content.find(b'4000\r\n')
     right = left + len(b'4000\r\n')
 
-    content = content[0:left] + content[right:]
+    if left != -1:
+        content = content[0:left] + content[right:]
 
     content = re.sub(rb'\r\n0\r\n\r\n', b"", content)
 
