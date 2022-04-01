@@ -99,7 +99,7 @@ def check_tcp(data, source_ip, destination_ip):
         = unpack('!HHLLBBHHH', data[:20])
     tcp_doff = tcp_offset_res >> 4
 
-    payload = data[tcp_doff * 4:]
+    payload = data[20:]
 
     saddr = socket.inet_aton(source_ip)
     daddr = socket.inet_aton(destination_ip)
@@ -111,7 +111,7 @@ def check_tcp(data, source_ip, destination_ip):
     # psh = psh + data[:16] + pack('H', 0) + data[18:]
 
     tcp_header = pack('!HHLLBBHHH', tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res,
-                      tcp_flags, tcp_window, tcp_check, tcp_urg_ptr)
+                      tcp_flags, tcp_window, 0, tcp_urg_ptr)
 
     tcp_length = len(tcp_header) + len(payload)
 
@@ -124,7 +124,7 @@ def check_tcp(data, source_ip, destination_ip):
 
     print("check:")
 
-    print(tcp_check & (~tcp_check))
+    print(tcp_check & we_check)
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))

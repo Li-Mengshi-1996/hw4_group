@@ -183,8 +183,9 @@ class RawSocket:
         print("receive")
 
         while True:
-            tcp_data = self._recv()
+            tcp_data = self._recv(delay=180)
             if tcp_data is None:
+                print("Connection lost.")
                 sys.exit(1)
 
             # tcp_offset_res = (tcp_data.tcp_doff << 4) + 0
