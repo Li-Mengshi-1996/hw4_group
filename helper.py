@@ -1,6 +1,7 @@
 import socket
 import random
 from struct import *
+import array
 
 
 def get_tcp_flags(fin=0, syn=0, rst=0, psh=0, ack=0, urg=0):
@@ -79,6 +80,20 @@ def parse_url(url):
     return host, file, path
 
 
+def checksum(s):
+    if len(s) & 1:
+        s = s + '\0'
+    words = array.array('h', s)
+    sum = 0
+    for word in words:
+        sum = sum + (word & 0xffff)
+    hi = sum >> 16
+    lo = sum & 0xffff
+    sum = hi + lo
+    sum = sum + (sum >> 16)
+    return (~sum) & 0xffff
+
+
 def check_tcp(data, source_ip, destination_ip):
     tcp_source_port, tcp_dest_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window, tcp_check, tcp_urg_ptr \
         = unpack('!HHLLBBHHH', data[:20])
@@ -95,7 +110,7 @@ def check_tcp(data, source_ip, destination_ip):
 
     temp = psh + data[:16] + pack('H', 0) + data[18:]
     print("origin check: " + str(tcp_check))
-    print("we check: " + str(check_sum(temp)))
+    print("we check: " + str(checksum(temp)))
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))
