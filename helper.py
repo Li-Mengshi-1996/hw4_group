@@ -80,52 +80,44 @@ def parse_url(url):
     return host, file, path
 
 
-def checksum(s):
-    if len(s) & 1:
-        s = s + b'\0'
-    words = array.array('h', s)
-    sum = 0
+def tcp_checksum(msg):
+    if len(msg) & 1:
+        msg = msg + b'\0'
+    words = array.array('h', msg)
+
+    s = 0
     for word in words:
-        sum = sum + (word & 0xffff)
-    hi = sum >> 16
-    lo = sum & 0xffff
-    sum = hi + lo
-    sum = sum + (sum >> 16)
-    return (~sum) & 0xffff
+        s = s + (word & 0xffff)
+
+    s = (s >> 16) + (s & 0xffff)
+    s = s + (s >> 16)
+    return (~s) & 0xffff
 
 
 def check_tcp(data, source_ip, destination_ip):
-    [src_port, dest_port, seq_num, ack_num, offset_res, tcp_flags, window] = unpack('!HHLLBBH', data[0:16])
-    [tcpchecksum] = unpack('H', data[16:18])
-    [urg_ptr] = unpack('!H', data[18:20])
+    tcp_source_port, tcp_destination_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window = unpack('!HHLLBBH', data[0:16])
+    tcp_check = unpack('H', data[16:18])
+    tcp_urg_ptr = unpack('!H', data[18:20])
 
-    len_header = offset_res >> 4
-    # self.fin = tcp_flags & 0x01
-    # self.syn = (tcp_flags & 0x02) >> 1
-    # self.rst = (tcp_flags & 0x04) >> 2
-    # self.psh = (tcp_flags & 0x08) >> 3
-    # self.ack = (tcp_flags & 0x16) >> 4
-    # self.urg = (tcp_flags & 0x32) >> 5
-    payload = data[len_header * 4:]
-    # do the checksum
-    # 1. set the pesudo header
-    src_ip = socket.inet_aton(source_ip)
-    dest_ip = socket.inet_aton(destination_ip)
+    tcp_doff = tcp_offset_res >> 4
+    payload = data[tcp_doff * 4:]
+    saddr = socket.inet_aton(source_ip)
+    daddr = socket.inet_aton(destination_ip)
     placeholder = 0
     protocol = socket.IPPROTO_TCP
     # tcp_length should be the length inside the header * 4 and plust the length of the data
-    tcp_length = len_header * 4 + len(payload)
+    tcp_length = tcp_doff * 4 + len(payload)
 
-    pesudo_header = pack('!4s4sBBH', src_ip, dest_ip, placeholder, protocol, tcp_length)
-    tcp_header_and_data = data[:16] + pack('H', 0) + data[18:]
-    temp = pesudo_header + tcp_header_and_data
-    new_checksum = checksum(temp)
+    psh = pack('!4s4sBBH', saddr, daddr, placeholder, protocol, tcp_length)
+    tcp_data = data[:16] + pack('H', 0) + data[18:]
+    temp = psh + tcp_data
+    new_checksum = tcp_checksum(temp)
 
     print("check")
-    print(tcpchecksum)
+    print(tcp_check)
     print(new_checksum)
 
-    return tcpchecksum == new_checksum
+    return tcp_check == tcp_checksum(temp)
 
 
 
