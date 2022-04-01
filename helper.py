@@ -82,7 +82,7 @@ def parse_url(url):
 
 def checksum(s):
     if len(s) & 1:
-        s = s + '\0'
+        s = s + b'\0'
     words = array.array('h', s)
     sum = 0
     for word in words:
