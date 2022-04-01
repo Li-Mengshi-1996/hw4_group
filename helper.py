@@ -125,6 +125,8 @@ def check_tcp(data, source_ip, destination_ip):
     print(tcpchecksum)
     print(new_checksum)
 
+    return tcpchecksum == new_checksum
+
 
 
 

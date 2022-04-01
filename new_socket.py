@@ -169,7 +169,13 @@ class RawSocket:
             print("Time Out.")
             return None
         # psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
-        check_tcp(tcp_data,self.source_ip, self.destination_ip)
+
+
+        if not check_tcp(tcp_data,self.source_ip, self.destination_ip):
+            # self._send("", get_tcp_flags(ack=1))
+            result = extract_tcp_header(tcp_data)
+            result.tcp_flags = -1
+            return result
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
@@ -187,6 +193,9 @@ class RawSocket:
             if tcp_data is None:
                 print("Connection lost.")
                 sys.exit(1)
+
+            if tcp_data.tcp_flags == -1:
+                self._send("", get_tcp_flags(ack=1))
 
             # tcp_offset_res = (tcp_data.tcp_doff << 4) + 0
             #
