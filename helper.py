@@ -109,8 +109,9 @@ def check_tcp(data, source_ip, destination_ip):
     psh = pack('!4s4sBBH', saddr, daddr, 0, socket.IPPROTO_TCP, total_length)
 
     temp = psh + data[:16] + pack('H', 0) + data[18:]
-    print("origin check: " + str(tcp_check))
-    print("we check: " + str(check_sum(temp)))
+    print("check:")
+
+    print(tcp_check & check_sum(temp))
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))
