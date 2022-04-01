@@ -96,7 +96,7 @@ def checksum(s):
 
 def check_tcp(data, source_ip, destination_ip):
     [src_port, dest_port, seq_num, ack_num, offset_res, tcp_flags, window] = unpack('!HHLLBBH', data[0:16])
-    [checksum] = unpack('H', data[16:18])
+    [tcpchecksum] = unpack('H', data[16:18])
     [urg_ptr] = unpack('!H', data[18:20])
 
     len_header = offset_res >> 4
@@ -122,7 +122,7 @@ def check_tcp(data, source_ip, destination_ip):
     new_checksum = checksum(temp)
 
     print("check")
-    print(checksum)
+    print(tcpchecksum)
     print(new_checksum)
 
 
