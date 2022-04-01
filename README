@@ -1,0 +1,31 @@
+High-level approach:
+
+1. We create a class called RawSocket, this socket will send and receive data. This class implements IP features and TCP functionality.
+2. In the RawSocket, there is a send socket with SOCK_RAW/IPPROTO_RAW to send data and a receive socket with SOCK_RAW/IPPROTO_TCP to receive data.
+3. We generate IP header and TCP header on our own when send data and check them when we receive data.
+4. We implement checksum generation, checksum check, TCP logics to handle out of order packets, congestion control and retransmission.
+
+
+IP features:
+
+1. In IP_TCP.py, there is an IPHeader class. In this class, we generate IP header with the checksum we calculate on our own and then wrap it with payload which consists of TCP header and data.
+2. In RawSocket class, we will verify the checksums of incoming packets and get the correct source and destination IP address.
+3. In RawSocket class, for every packet, we will check if the data is from the remote server and has the correct remote IP and has the right checksum and protocol.
+4. In RawSocket, if we haven't received the data in 180 seconds, we will print error message and shut down the program.
+
+TCP features:
+
+1. In IP_TCP.py, there is a TCPHeader class. In this class, we generate TCP header with the checksum we calculate on our own and then wrap it with data.
+2. In RawSocket, we will select valid source port and destination port.
+3. In RawSocket, we will perform three-way handshake when we connect to the remote server and we will use teardown to send flags to the remote server when we want to close the connect.
+4. In RawSocket, we will check the checksums, TCP flags and sequence numbers to make sure we get the right packets and then we put them in a dictionary.
+5. In RawSocket, after we get valid packets, we will update the sequence numbers and acknowledge numbers based on the packet we get and send back ACKs.
+6. In RawSocket, we will implement congestion control and data retransmission. Every time we send a packet, we will wait 60 seconds to get the ACK from the remote server, if we didn't get it because of a packet drop or timeout, we will reset the congestion window to 1, otherwise we will double the size all the way to 1000.
+7. In RawSocket, after we get all data, because it's stored in a dictionary(the key is sequence number, the value is data), there will be no duplicated data and after we sort them based on sequence number, we can get the whole data in correct order. Then we can send it back to HTTP part.
+
+
+Challenges:
+1. We need to figure out how we shall update our sequence numbers and ACK numbers.
+2. We need to find how to create the IP headers and TCP headers correctly.
+
+
