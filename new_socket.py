@@ -169,7 +169,7 @@ class RawSocket:
             print("Time Out.")
             return None
         # psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
-        check_tcp(tcp_data,self.destination_ip, self.source_ip)
+        check_tcp(tcp_data,self.source_ip, self.destination_ip)
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
