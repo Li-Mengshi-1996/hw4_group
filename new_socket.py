@@ -314,6 +314,8 @@ def main():
     t.send(request)
     content = t.receive()
 
+    print(content[0:200])
+
     if not content.startswith(b"HTTP/1.1 200 OK"):
         print("Non-200 status code")
         sys.exit()
