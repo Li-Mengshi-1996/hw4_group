@@ -124,7 +124,7 @@ def check_tcp(data, source_ip, destination_ip):
 
     print("check:")
 
-    print(tcp_check & we_check)
+    print(tcp_check & (~tcp_check))
 
 # print(split_data_to_send("1234567891234567891234567891234",9,0))
 # print(get_tcp_flags(ack=1))
