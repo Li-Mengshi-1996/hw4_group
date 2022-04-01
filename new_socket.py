@@ -170,8 +170,7 @@ class RawSocket:
             return None
         # psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
 
-
-        if not check_tcp(tcp_data,self.source_ip, self.destination_ip):
+        if not check_tcp(tcp_data, self.source_ip, self.destination_ip):
             # self._send("", get_tcp_flags(ack=1))
             result = extract_tcp_header(tcp_data)
             result.tcp_flags = -1
@@ -339,7 +338,7 @@ def main():
 
     for item in temp:
         try:
-            in_ten = int(item,16)
+            in_ten = int(item, 16)
             result = result[0:len(result) - diff]
             print("find garbage")
         except:

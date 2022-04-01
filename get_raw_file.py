@@ -24,7 +24,7 @@ def parse_response(response):
 
 
 
-host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
 request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
 
 context = ssl.create_default_context()
@@ -36,8 +36,9 @@ with socket.create_connection((host, 443)) as sock:
         content = b""
 
         while True:
-            temp = ssock.recvfrom(65536)
+            temp = ssock.recv(65536)
             content += temp
+            break
             # print(temp)
             # print("break")
 
@@ -48,8 +49,8 @@ with socket.create_connection((host, 443)) as sock:
 
         print(content)
 
-        with open("hello.php", 'wb') as file:
-            file.write(content)
+        # with open("hello.php", 'wb') as file:
+        #     file.write(content)
 
 
 # file_new = open("hello.php", 'rb')
