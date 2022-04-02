@@ -170,12 +170,12 @@ class RawSocket:
             return None
         # psh = get_pseudo_ip_header(self.destination_ip, self.source_ip, len(tcp_data))
 
-        # if choice == 1:
-        #     if not check_tcp(tcp_data, self.source_ip, self.destination_ip):
-        #         # self._send("", get_tcp_flags(ack=1))
-        #         result = extract_tcp_header(tcp_data)
-        #         result.tcp_flags = -1
-        #         return result
+        if choice == 1:
+            if not check_tcp(tcp_data, self.source_ip, self.destination_ip):
+                # self._send("", get_tcp_flags(ack=1))
+                result = extract_tcp_header(tcp_data)
+                result.tcp_flags = -1
+                return result
 
         # print("check: " + str(calculate_checksum(psh + tcp_data)))
 
@@ -225,7 +225,7 @@ class RawSocket:
                 self._send("", get_tcp_flags(fin=1, ack=1))
                 if len(tcp_data.payload) != 0:
                     self.recv_dict[tcp_data.tcp_seq] = tcp_data.payload
-                # tcp_data.print()
+                tcp_data.print()
                 print(tcp_data.payload)
                 break
             if tcp_data.tcp_flags & get_tcp_flags(ack=1) and tcp_data.payload:
