@@ -219,7 +219,7 @@ class RawSocket:
             #     self._send("", get_tcp_flags(ack=1))
             #     continue
 
-            if len(tcp_data.payload == 0) and (tcp_data.tcp_flags & get_tcp_flags(fin=1)):
+            if len(tcp_data.payload) == 0 and (tcp_data.tcp_flags & get_tcp_flags(fin=1)):
                 self.tcp_seq = tcp_data.tcp_ack_seq
                 self.tcp_ack = tcp_data.tcp_seq + 1
                 self._send("", get_tcp_flags(fin=1, ack=1))
