@@ -95,9 +95,9 @@ def tcp_checksum(msg):
 
 
 def check_tcp(data, source_ip, destination_ip):
-    tcp_source_port, tcp_destination_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window = unpack('!HHLLBBH', data[0:16])
-    tcp_check = unpack('H', data[16:18])
-    tcp_urg_ptr = unpack('!H', data[18:20])
+    [tcp_source_port, tcp_destination_port, tcp_seq, tcp_ack_seq, tcp_offset_res, tcp_flags, tcp_window] = unpack('!HHLLBBH', data[0:16])
+    [tcp_check] = unpack('H', data[16:18])
+    [tcp_urg_ptr] = unpack('!H', data[18:20])
 
     tcp_doff = tcp_offset_res >> 4
     payload = data[tcp_doff * 4:]
