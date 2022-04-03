@@ -49,3 +49,14 @@ print(result.group(1))
 # file = open("index.html","rb")
 # content = file.read()
 # print(content)
+
+
+# os.system("sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP")
+# os.system("sudo ethtool -K ens33 tx off rx off gro off")
+# os.system("sudo ethtool -K enp0s3 tx off rx off gro off")
+
+# host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+# host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/2MB.log")
+# host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
+# host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
+# host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/")
