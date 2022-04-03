@@ -6,7 +6,7 @@ High-level approach:
 
 In HTTP part, we are given a url, and we will parse it and get the host name, the path and the file name to output. Then we will create a RawSocket object written by us and connect to the remote server. Next we will send a http GET request based on the host name and path. Then we will receive data from the remote server. Finally we will filter out data with non-200 status code, remove http header, handle chunked encoding and save it to the file.
 In IP_TCP.py, there are two classes IPHeader and TCPHeader which will generate IP header and TCP header respectively.
-In the RawSocket class(in new_socket.py), there is a send socket with SOCK_RAW/IPPROTO_RAW to send data and a receive socket with SOCK_RAW/IPPROTO_TCP to receive data.
+In the RawSocket class(in raw_socket.py), there is a send socket with SOCK_RAW/IPPROTO_RAW to send data and a receive socket with SOCK_RAW/IPPROTO_TCP to receive data.
 In the RawSocket class, it implements IP features and TCP functionality. In this class, we implement checksum generation, checksum check, TCP logics to handle out of order packets, congestion control, retransmission along with other features and functions a socket needs.
 
 
