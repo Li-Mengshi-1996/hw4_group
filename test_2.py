@@ -154,12 +154,21 @@
 
 import re
 
-content = b'nt-Type: text/html; charset=UTF-8\r\n\r\n4000\r\n<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>'
-flag = re.search(rb'\r\n\r\n[0-9a-fA-F]\d*\r\n', content)
+# content = b'nt-Type: text/html; charset=UTF-8\r\n\r\n4000\r\n<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>'
+# flag = re.search(rb'\r\n\r\n[0-9a-fA-F]\d*\r\n', content)
+#
+# if flag is not None:
+#     left = flag.span()[0] + len(b"\r\n\r\n")
+#     right = flag.span()[1]
+#     content = content[0:left] + content[right:]
+#
+# print(content)
 
-if flag is not None:
-    left = flag.span()[0] + len(b"\r\n\r\n")
-    right = flag.span()[1]
-    content = content[0:left] + content[right:]
+from helper import *
 
-print(content)
+url = "https://david.choffnes.com/"
+host, file_name, path = parse_url(url)
+
+print(host)
+print(file_name)
+print(path)
