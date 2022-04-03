@@ -21,11 +21,17 @@ def main():
         sys.exit()
 
     # Handle chunked encoding.
-    left = content.find(b'4000\r\n')
-    right = left + len(b'4000\r\n')
+    # left = content.find(b'4000\r\n')
+    # right = left + len(b'4000\r\n')
 
-    if left != -1:
+    flag = re.search(rb'\r\n\r\n[0-9a-fA-F]\d*\r\n', content)
+
+    if flag is not None:
+        left = flag.span()[0] + len(b"\r\n\r\n")
+        right = flag.span()[1]
         content = content[0:left] + content[right:]
+    # if left != -1:
+    #     content = content[0:left] + content[right:]
     content = re.sub(rb'\r\n0\r\n\r\n', b"", content)
 
     temp = content.split(b"\r\n")

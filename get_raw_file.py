@@ -24,7 +24,7 @@ def parse_response(response):
 
 
 
-host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
+host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
 request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
 
 context = ssl.create_default_context()
