@@ -43,7 +43,6 @@ def main():
         try:
             in_ten = int(item, 16)
             result = result[0:len(result) - diff]
-            print("find garbage")
         except:
             result = result + item + b"\r\n"
 
