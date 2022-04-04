@@ -1,4 +1,5 @@
-Mengshi Li:
+Mengshi Li: RawSocket class, helper.py
+Jiansong Huang: generate IP and TCP header, http_crawler.py
 
 
 Before running please run the following commands:

@@ -1,3 +1,7 @@
+Mengshi Li: RawSocket class, helper.py
+Jiansong Huang: generate IP and TCP header, http_crawler.py
+
+
 Before running please run the following commands:
 sudo iptables -A OUTPUT -p tcp --tcp-flags RST RST -j DROP
 sudo ethtool -K <interface name> tx off rx off gro off (Mentioned in piazza: https://piazza.com/class/kyc1vsrynkx2mv?cid=137)
