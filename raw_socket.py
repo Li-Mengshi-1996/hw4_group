@@ -111,7 +111,7 @@ class RawSocket:
         """
         Receive the raw data from the remote server and change it to an IPHeader object.
         :param delay: the delay time, default value is 60 seconds.
-        :return: an IPHeader object
+        :return: a packet with TCP header and data
         """
         self.recv_socket.settimeout(delay)
         try:
