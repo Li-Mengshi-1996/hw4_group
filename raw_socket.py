@@ -195,7 +195,7 @@ class RawSocket:
                     self.cwnd = 1
                     self._send("", get_tcp_flags(ack=1))
 
-        # After we got all packets, we will sore them by sequence number.
+        # After we got all packets, we will sort them by sequence number.
         tuple_list = []
         for seq in self.recv_dict.keys():
             tuple_list.append((seq, self.recv_dict[seq]))
