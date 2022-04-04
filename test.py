@@ -60,3 +60,13 @@ print(result.group(1))
 # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/10MB.log")
 # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/50MB.log")
 # host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/")
+
+# scp /Users/mengshi/Desktop/5700/hw4_group/helper.py mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/http_crawler.py mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/IP_TCP.py mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/Makefile mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/raw_socket.py mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/rawhttpget mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+# scp /Users/mengshi/Desktop/5700/hw4_group/README mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
+
+# scp -r mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4 /Users/mengshi/Desktop/5700/hw4_group/
