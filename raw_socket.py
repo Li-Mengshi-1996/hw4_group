@@ -70,15 +70,6 @@ class RawSocket:
             # Send a piece of data.
             self._send(piece, flag)
 
-            # payload = piece.encode()
-            #
-            # # Wrap data with IP header and TCP header.
-            # tcp_data = TCPHeader(self.source_port, self.destination_port, self.tcp_seq, self.tcp_ack, flag,
-            #                      payload=payload)
-            # ip_tcp_data = IPHeader(self.packet_id, self.source_ip, self.destination_ip,
-            #                        tcp_data.create_tcp_header(self.source_ip, self.destination_ip))
-            # self.send_socket.sendto(ip_tcp_data.create_ip_header(), (self.destination_ip, self.destination_port))
-
             tcp_data = self._recv()
 
             # If we can't get the ACK in 60 seconds, we think it's lost,
