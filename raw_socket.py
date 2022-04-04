@@ -54,8 +54,6 @@ class RawSocket:
         self.tcp_ack = tcp_data.tcp_seq + 1
         self._send('', get_tcp_flags(ack=1))
 
-        print("connected")
-
     def send(self, data):
         """
         Users will use this function to send data to the remote server.
