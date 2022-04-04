@@ -2,6 +2,7 @@ import socket
 from helper import *
 import ssl
 
+
 def parse_response(response):
     status_line, response = response.split(b'\r\n', 1)
     status_line = status_line.decode('ascii')
@@ -21,36 +22,41 @@ def parse_response(response):
     return code, reason_phrase, content, cookies, parsed_headers
 
 
-
-
-
-host, file_name, path = parse_url("https://david.choffnes.com/classes/cs4700sp22/project4.php")
+host, file_name, path = parse_url("https://david.choffnes.com")
 request = 'GET ' + path + ' HTTP/1.1\r\n' + 'Host: ' + host + '\r\n\r\n'
 
 context = ssl.create_default_context()
 
-with socket.create_connection((host, 443)) as sock:
-    with context.wrap_socket(sock, server_hostname=host) as ssock:
-        ssock.send(request.encode())
+s = socket.socket()
 
-        content = b""
+s.connect((host, 80))
+s.send(request.encode())
+temp = s.recv(65536)
 
-        while True:
-            temp = ssock.recv(65536)
-            content += temp
-            break
-            # print(temp)
-            # print("break")
+print(temp)
 
-            if content.find(b"/html>") != -1:
-                break
+# with socket.create_connection((host, 443)) as sock:
+#     with context.wrap_socket(sock, server_hostname=host) as ssock:
+#         ssock.send(request.encode())
+#
+#         content = b""
+#
+#         while True:
+#             temp = ssock.recv(65536)
+#             content += temp
+#             break
+#             # print(temp)
+#             # print("break")
+#
+#             if content.find(b"/html>") != -1:
+#                 break
+#
+#         # code, reason_phrase, content, cookies, parsed_headers = parse_response(content)
+#
+#         print(content)
 
-        # code, reason_phrase, content, cookies, parsed_headers = parse_response(content)
-
-        print(content)
-
-        # with open("hello.php", 'wb') as file:
-        #     file.write(content)
+# with open("hello.php", 'wb') as file:
+#     file.write(content)
 
 
 # file_new = open("hello.php", 'rb')
@@ -64,8 +70,6 @@ with socket.create_connection((host, 443)) as sock:
 #         print(int(temp))
 #     except:
 #         continue
-
-
 
 
 # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -70,3 +70,5 @@ print(result.group(1))
 # scp /Users/mengshi/Desktop/5700/hw4_group/README mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4/
 
 # scp -r mengshi@login.khoury.northeastern.edu:/home/mengshi/CS5700/hw4 /Users/mengshi/Desktop/5700/hw4_group/
+
+# https://david.choffnes.com/classes/cs4700sp22/
