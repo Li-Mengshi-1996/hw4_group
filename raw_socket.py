@@ -65,7 +65,7 @@ class RawSocket:
         pointer = 0
 
         while pointer < len(data):
-            end = min(pointer + self.cwnd * self.segment_size, len(data))
+            end = min(pointer + self.cwnd, len(data))
             piece = data[pointer: end]
 
             # Send a piece of data.
