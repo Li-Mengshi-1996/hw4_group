@@ -23,6 +23,7 @@ class RawSocket:
             self.tcp_ack = 0
             self.cwnd = 1
             self.adwnd = 5840
+            self.segment_size = 1460
 
             self.buff_size = 65535
             self.packet_id = 0
@@ -64,7 +65,7 @@ class RawSocket:
         pointer = 0
 
         while pointer < len(data):
-            end = min(pointer + self.cwnd, len(data))
+            end = min(pointer + self.cwnd * self.segment_size, len(data))
             piece = data[pointer: end]
 
             # Send a piece of data.
